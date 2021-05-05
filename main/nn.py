@@ -2,31 +2,39 @@ import keras
 from keras.layers import Dense, Flatten
 from keras.layers import Conv2D, Conv1D, MaxPooling1D, Reshape
 from keras.models import Sequential
-# Comentario
-# Comentario de prueba
 
-def conv():
-    input_shape = (21, 100, 1)
-    num_classes = 2
-    temporal_filters = 50
+
+def conv(temporal_filters=50, kernel_size=7, pool_size=2, input_shape=(21,100,1), 
+         num_classes=2, learning_rate=1e-4, optimizer='sgd', activation='relu'):
 
     model = Sequential()
-    model.add(Conv2D(temporal_filters, kernel_size=(1, 7), strides=(1, 1),
-                     input_shape=input_shape))
-    model.add(Conv2D(temporal_filters, (input_shape[0], 1), activation='relu'))
+    
+    model.add(Conv2D(temporal_filters, kernel_size=(1, kernel_size), input_shape=input_shape))
+    model.add(Conv2D(temporal_filters, (input_shape[0], 1), activation=activation))
     model.add(Reshape((-1, temporal_filters)))
-    model.add(MaxPooling1D(pool_size=2))
-    model.add(Conv1D(2 * temporal_filters, 7, activation='relu'))
-    model.add(MaxPooling1D(pool_size=2))
-    model.add(Conv1D(4 * temporal_filters, 7, activation='relu'))
-    model.add(MaxPooling1D(pool_size=2))
+    model.add(MaxPooling1D(pool_size=pool_size))
+    
+    model.add(Conv1D(pool_size * temporal_filters, kernel_size=kernel_size, activation=activation))
+    model.add(MaxPooling1D(pool_size=pool_size))
+    
+    model.add(Conv1D(pool_size * pool_size * temporal_filters, kernel_size=kernel_size, activation=activation))
+    model.add(MaxPooling1D(pool_size=pool_size))
+    
     model.add(Flatten())
-    model.add(Dense(500, activation='relu'))
-    model.add(Dense(100, activation='relu'))
+    
+    model.add(Dense(500, activation=activation))
+    model.add(Dense(100, activation=activation))
+    
     model.add(Dense(num_classes, activation='softmax'))
 
+    if optimizer=='adam':
+        opt = keras.optimizers.Adam(learning_rate=learning_rate)
+    else:
+        opt = keras.optimizers.SGD(lr=learning_rate)
+
     model.compile(loss=keras.losses.categorical_crossentropy,
-                  optimizer=keras.optimizers.SGD(lr=1e-4),
+                  optimizer=opt,
                   metrics=['accuracy'])
+    
     model.summary()
     return model
