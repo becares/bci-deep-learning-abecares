@@ -36,5 +36,5 @@ def conv(temporal_filters=50, kernel_size=7, pool_size=2, input_shape=(21,100,1)
                   optimizer=opt,
                   metrics=['accuracy'])
     
-    model.summary()
+    #model.summary()
     return model
