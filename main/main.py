@@ -4,12 +4,17 @@ import mne
 import keras.utils
 import ray
 from tensorflow.keras.utils import Sequence
+from sklearn.model_selection import KFold
 from ray import tune
 from ray.tune.schedulers import PopulationBasedTraining
 
 import lemb
 import data
 import nn
+
+##### CREDITS #####
+# Cross-validation: https://www.machinecurve.com/index.php/2020/02/18/how-to-use-k-fold-cross-validation-with-keras/#code-example-k-fold-cross-validation-with-tensorflow-and-keras
+# https://scikit-learn.org/stable/modules/cross_validation.html
 
 
 ##### AUXILIARY FUNCTIONS #####
@@ -109,7 +114,7 @@ class NNModel(tune.Trainable):
         self.temporal_filters = 50
         
         self.batch_size = 32
-        self.epochs = 1
+        self.epochs = 10
         
         self.accuracy = 0.0
     
@@ -117,24 +122,43 @@ class NNModel(tune.Trainable):
         
         data = generate_data(self.config['epochs_list'], self.window_size, self.step_size)
         
-        network = nn.conv(temporal_filters=self.temporal_filters,
-                  kernel_size=self.kernel_size,
-                  pool_size=self.pool_size,
-                  learning_rate=self.config['learning_rate'],
-                  optimizer=self.optimizer,
-                  activation=self.activation)
+        inputs = np.concatenate((data['x_train'], data['x_test']), axis=0)
+        targets = np.concatenate((data['y_train'], data['y_test']), axis=0)
         
-        network.fit(data['x_train'], 
-                    data['y_train'],
-                    batch_size=self.batch_size,
-                    epochs=self.epochs,
-                    verbose=0)
+        acc_per_fold = []
+        loss_per_fold = []
         
-        #Test loss: score[0]
-        #Test accuracy: score[1]
-        score = network.evaluate(data['x_test'], data['y_test'], verbose=0)
+        kfold = KFold(n_splits=10, shuffle=True) # 10-Fold Cross-Validation
         
-        return {'accuracy': score[1]}
+        fold = 1
+        for train, test in kfold.split(inputs, targets):
+        
+            model = nn.conv(temporal_filters=self.temporal_filters,
+                    kernel_size=self.kernel_size,
+                    pool_size=self.pool_size,
+                    learning_rate=self.config['learning_rate'],
+                    optimizer=self.optimizer,
+                    activation=self.activation)
+            
+            print('------------------------------------------------------------------------')
+            print(f'Training for fold {fold} ...')
+            
+            model.fit(inputs[train], 
+                      targets[train],
+                      batch_size=self.batch_size,
+                      epochs=self.epochs,
+                      verbose=0)
+            
+            #Test loss: score[0]
+            #Test accuracy: score[1]
+            scores = model.evaluate(inputs[test], targets[test], verbose=0)
+            print(f'Score for fold {fold}: {model.metrics_names[0]} of {scores[0]}; {model.metrics_names[1]} of {scores[1]}')
+            acc_per_fold.append(scores[1])
+            loss_per_fold.append(scores[0])
+            
+            fold += 1
+        
+        return {'accuracy': np.mean(acc_per_fold)}
     
     def save_checkpoint(self, checkpoint_dir):
         return {
@@ -169,8 +193,8 @@ if __name__ == "__main__":
                 scheduler=pbt,
                 metric="accuracy",
                 mode="max",
-                stop={"training_iteration": 2},
-                num_samples=2,
+                stop={"training_iteration": 5},
+                num_samples=3,
                 config={
                     "epochs_list": epochs_list,
                     "learning_rate": 1e-4
