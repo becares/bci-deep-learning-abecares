@@ -15,9 +15,17 @@ import lemb
 import data
 import nn
 
-##### CREDITS #####
+
+##### SOURCES #####
 # Cross-validation: https://www.machinecurve.com/index.php/2020/02/18/how-to-use-k-fold-cross-validation-with-keras/#code-example-k-fold-cross-validation-with-tensorflow-and-keras
-# https://scikit-learn.org/stable/modules/cross_validation.html
+#                   https://scikit-learn.org/stable/modules/cross_validation.html
+
+
+##### TASKS #####
+# TODO batch-normalization {sí,no} -> meterlos entre la creacion de las conv1d y la activation layer
+# TODO probar relu y elu
+# TODO nº capas conv -> añadir 1 o 2 capas con un for
+# TODO nº capas densas (0,1,2) con el % (20,75) de neuronas cada una y hacerles un dropout {0,0.6} (añadir como otra capa) con un choice
 
 
 ##### AUXILIARY FUNCTIONS #####
@@ -69,7 +77,6 @@ def generate_data(epoch_list, window_size, step_size):
     y_train = y_train[permutation]
     del permutation
 
-    n_crops = len(x_train)
     x_train = np.expand_dims(x_train, axis=3)
     y_train = keras.utils.to_categorical(y_train - 1, 2)
 
@@ -105,7 +112,7 @@ class NNModel(tune.Trainable):
     def setup(self, config):
         
         self.batch_size = 32
-        self.epochs = 1
+        self.epochs = 10
         
         self.learning_rate = 0.0
         self.accuracy = 0.0
@@ -113,17 +120,29 @@ class NNModel(tune.Trainable):
     def step(self):
         
         window_size = int(self.config['window_size'])
-        step_size = int(self.config['step_size'])
+        step_size = int(window_size * self.config['step_size'])
         kernel_size = int(self.config['kernel_size'] + 1)
         pool_size = int(self.config['pool_size'])
         learning_rate = self.config['learning_rate']
         temporal_filters = int(self.config['temporal_filters'])
-        
-        print('------------------------------------------------------------------------')
-        print(f'Current configuration: window_size: {window_size}, step_size: {step_size}')
-        print(f'kernel_size: {kernel_size}, pool_size: {pool_size}')
+        optimizer = self.config['optimizer']
+        activation = self.config['activation']
+        batch_normalization = self.config['batch_normalization']
+        n_conv_layers = int(self.config['n_conv_layers'])
+        n_fc_layers = int(self.config['n_fc_layers'])
+        n_neurons_2nd_layer = self.config['n_neurons_2nd_layer']
+        dropout_rate = self.config['dropout_rate']
+
+        print('---------------------------------------------------------------------------------')
+        print('Current configuration:')
+        print(f'window_size: {window_size}, step_size: {step_size},')
+        print(f'kernel_size: {kernel_size}, pool_size: {pool_size},')
         print(f'learning_rate: {learning_rate}, temporal_filters: {temporal_filters}')
-        print('------------------------------------------------------------------------')
+        print(f'optimizer: {optimizer}, activation: {activation},')
+        print(f'batch_normalization: {batch_normalization}, n_conv_layers: {n_conv_layers},')
+        print(f'n_fc_layers: {n_fc_layers}, n_neurons_2nd_layer: {n_neurons_2nd_layer},')
+        print(f'dropout_rate: {dropout_rate}')
+        print('---------------------------------------------------------------------------------')
         
         data = generate_data(self.config['epochs_list'], window_size, step_size)
         
@@ -143,8 +162,13 @@ class NNModel(tune.Trainable):
                     pool_size=pool_size,
                     window_size=window_size,
                     learning_rate=learning_rate,
-                    optimizer=self.config['optimizer'],
-                    activation=self.config['activation'])
+                    optimizer=optimizer,
+                    activation=activation,
+                    batch_normalization=batch_normalization,
+                    n_conv_layers=n_conv_layers,
+                    n_fc_layers=n_fc_layers,
+                    n_neurons_2nd_layer=n_neurons_2nd_layer,
+                    dropout_rate=dropout_rate)
             
             print('------------------------------------------------------------------------')
             print(f'Training for fold {fold} ...')
@@ -165,20 +189,6 @@ class NNModel(tune.Trainable):
             fold += 1
         
         return {'accuracy': np.mean(acc_per_fold)}
-    
-    def save_checkpoint(self, checkpoint_dir):
-        return {
-            "accuracy": self.accuracy,
-            "learning_rate": self.learning_rate,
-        }
-
-    def load_checkpoint(self, checkpoint):
-        self.accuracy = checkpoint["accuracy"]
-        
-    def reset_config(self, new_config):
-        self.lr = new_config["learning_rate"]
-        self.config = new_config
-        return True
 
 # MAIN #
 if __name__ == "__main__":
@@ -187,6 +197,7 @@ if __name__ == "__main__":
     
     epochs_list = load_epochs()
 
+    """
     pbt = PopulationBasedTraining(
           perturbation_interval=2,
           hyperparam_mutations={"window_size": [25,50,100],
@@ -196,6 +207,7 @@ if __name__ == "__main__":
                                 "learning_rate": lambda: 10**np.random.randint(-5, -2),
                                 "temporal_filters": lambda: np.linspace(10,50,5).astype('int')
           })
+    """
     
     byo = BayesOptSearch()
     hys = HyperOptSearch()
@@ -211,18 +223,23 @@ if __name__ == "__main__":
                 search_alg=hys,
                 metric="accuracy",
                 mode="max",
-                stop={"training_iteration": 2},
-                num_samples=3,
+                stop={"training_iteration": 5},
+                num_samples=5,
                 config={
                     "epochs_list": epochs_list,
                     "window_size": tune.quniform(10,100,1),
-                    "step_size": tune.quniform(10,100,1),
+                    "step_size": tune.quniform(0.1,1,0.1),
                     "kernel_size": tune.quniform(2,8,2),
                     "pool_size": tune.quniform(2,3,1),
                     "optimizer": tune.choice(["adam","sgd"]),
                     "activation": tune.choice(["relu","elu"]),
                     "learning_rate": tune.loguniform(1e-5,1e-2),
-                    "temporal_filters": tune.quniform(10,50,10)
+                    "temporal_filters": tune.quniform(10,50,10),
+                    "batch_normalization": tune.choice([True,False]),
+                    "n_conv_layers": tune.quniform(0,2,1),
+                    "n_fc_layers": tune.quniform(0,2,1),
+                    "n_neurons_2nd_layer": tune.quniform(0.2,0.75,0.05),
+                    "dropout_rate": tune.choice([0,0.6])
                     }
               )
 
