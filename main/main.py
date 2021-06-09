@@ -7,7 +7,10 @@ from tensorflow.keras.utils import Sequence
 from sklearn.model_selection import KFold
 from ray import tune
 from ray.tune.schedulers import PopulationBasedTraining
-
+from ray.tune.schedulers import AsyncHyperBandScheduler
+from ray.tune.suggest import ConcurrencyLimiter
+from ray.tune.suggest.bayesopt import BayesOptSearch
+from ray.tune.suggest.hyperopt import HyperOptSearch
 import lemb
 import data
 import nn
@@ -101,26 +104,28 @@ class NNModel(tune.Trainable):
     
     def setup(self, config):
         
-        self.window_size = 100
-        self.step_size = 20
-        
-        self.kernel_size = 7
-        self.pool_size = 2
-        
-        self.optimizer = 'adam'
-        self.activation = 'relu'
-        
-        self.learning_rate = 1e-4
-        self.temporal_filters = 50
-        
         self.batch_size = 32
-        self.epochs = 10
+        self.epochs = 1
         
+        self.learning_rate = 0.0
         self.accuracy = 0.0
     
     def step(self):
         
-        data = generate_data(self.config['epochs_list'], self.window_size, self.step_size)
+        window_size = int(self.config['window_size'])
+        step_size = int(self.config['step_size'])
+        kernel_size = int(self.config['kernel_size'] + 1)
+        pool_size = int(self.config['pool_size'])
+        learning_rate = self.config['learning_rate']
+        temporal_filters = int(self.config['temporal_filters'])
+        
+        print('------------------------------------------------------------------------')
+        print(f'Current configuration: window_size: {window_size}, step_size: {step_size}')
+        print(f'kernel_size: {kernel_size}, pool_size: {pool_size}')
+        print(f'learning_rate: {learning_rate}, temporal_filters: {temporal_filters}')
+        print('------------------------------------------------------------------------')
+        
+        data = generate_data(self.config['epochs_list'], window_size, step_size)
         
         inputs = np.concatenate((data['x_train'], data['x_test']), axis=0)
         targets = np.concatenate((data['y_train'], data['y_test']), axis=0)
@@ -133,12 +138,13 @@ class NNModel(tune.Trainable):
         fold = 1
         for train, test in kfold.split(inputs, targets):
         
-            model = nn.conv(temporal_filters=self.temporal_filters,
-                    kernel_size=self.kernel_size,
-                    pool_size=self.pool_size,
-                    learning_rate=self.config['learning_rate'],
-                    optimizer=self.optimizer,
-                    activation=self.activation)
+            model = nn.conv(temporal_filters=temporal_filters,
+                    kernel_size=kernel_size,
+                    pool_size=pool_size,
+                    window_size=window_size,
+                    learning_rate=learning_rate,
+                    optimizer=self.config['optimizer'],
+                    activation=self.config['activation'])
             
             print('------------------------------------------------------------------------')
             print(f'Training for fold {fold} ...')
@@ -183,23 +189,42 @@ if __name__ == "__main__":
 
     pbt = PopulationBasedTraining(
           perturbation_interval=2,
-          hyperparam_mutations={"learning_rate": lambda: 10**np.random.randint(-5, -2),
+          hyperparam_mutations={"window_size": [25,50,100],
+                                "step_size": lambda: np.arange(10,100,10),
+                                "kernel_size": [3,5,7,9],
+                                "pool_size": [2,3],
+                                "learning_rate": lambda: 10**np.random.randint(-5, -2),
+                                "temporal_filters": lambda: np.linspace(10,50,5).astype('int')
           })
-
+    
+    byo = BayesOptSearch()
+    hys = HyperOptSearch()
+    
+    hys = ConcurrencyLimiter(hys, max_concurrent=4)
+    scheduler = AsyncHyperBandScheduler()
+    
     results = tune.run(
                 NNModel,
                 resources_per_trial={'gpu': 1},
                 name="nn_test",
-                scheduler=pbt,
+                scheduler=scheduler,
+                search_alg=hys,
                 metric="accuracy",
                 mode="max",
-                stop={"training_iteration": 5},
+                stop={"training_iteration": 2},
                 num_samples=3,
                 config={
                     "epochs_list": epochs_list,
-                    "learning_rate": 1e-4
-                }
-                )
+                    "window_size": tune.quniform(10,100,1),
+                    "step_size": tune.quniform(10,100,1),
+                    "kernel_size": tune.quniform(2,8,2),
+                    "pool_size": tune.quniform(2,3,1),
+                    "optimizer": tune.choice(["adam","sgd"]),
+                    "activation": tune.choice(["relu","elu"]),
+                    "learning_rate": tune.loguniform(1e-5,1e-2),
+                    "temporal_filters": tune.quniform(10,50,10)
+                    }
+              )
 
     df = results.dataframe(metric="accuracy", mode="max")
     #print(df)

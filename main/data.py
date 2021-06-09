@@ -25,9 +25,9 @@ def crop_epochs(epochs, window_size, step_size):
     """
     data = epochs.get_data()
     n_epochs, n_channels, epoch_size = data.shape
-    assert window_size < epoch_size, "Window must be shorter than epoch"
+    assert window_size < epoch_size, 'Window must be shorter than epoch'
 
-    crops_per_epoch = int(math.floor(epoch_size - window_size) / step_size) + 1
+    crops_per_epoch = int(math.floor((epoch_size - window_size) / step_size) + 1)
     crops = np.empty((crops_per_epoch * n_epochs, n_channels - 1, window_size))
     labels = np.empty(crops_per_epoch * n_epochs)
 
