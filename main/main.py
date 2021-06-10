@@ -22,10 +22,6 @@ import nn
 
 
 ##### TASKS #####
-# TODO batch-normalization {sí,no} -> meterlos entre la creacion de las conv1d y la activation layer
-# TODO probar relu y elu
-# TODO nº capas conv -> añadir 1 o 2 capas con un for
-# TODO nº capas densas (0,1,2) con el % (20,75) de neuronas cada una y hacerles un dropout {0,0.6} (añadir como otra capa) con un choice
 
 
 ##### AUXILIARY FUNCTIONS #####
@@ -121,7 +117,7 @@ class NNModel(tune.Trainable):
         
         window_size = int(self.config['window_size'])
         step_size = int(window_size * self.config['step_size'])
-        kernel_size = int(self.config['kernel_size'] + 1)
+        kernel_size = int(self.config['kernel_size']) #FIXME + 1)
         pool_size = int(self.config['pool_size'])
         learning_rate = self.config['learning_rate']
         temporal_filters = int(self.config['temporal_filters'])
@@ -229,7 +225,7 @@ if __name__ == "__main__":
                     "epochs_list": epochs_list,
                     "window_size": tune.quniform(10,100,1),
                     "step_size": tune.quniform(0.1,1,0.1),
-                    "kernel_size": tune.quniform(2,8,2),
+                    "kernel_size": 1,#FIXME tune.quniform(2,8,2),
                     "pool_size": tune.quniform(2,3,1),
                     "optimizer": tune.choice(["adam","sgd"]),
                     "activation": tune.choice(["relu","elu"]),
