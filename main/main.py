@@ -109,7 +109,7 @@ class NNModel(tune.Trainable):
     def setup(self, config):
         
         self.batch_size = 32
-        self.epochs = 30
+        self.epochs = 100
         
         self.learning_rate = 0.0
         self.accuracy = 0.0
@@ -146,7 +146,7 @@ class NNModel(tune.Trainable):
         inputs = np.concatenate((data['x_train'], data['x_test']), axis=0)
         targets = np.concatenate((data['y_train'], data['y_test']), axis=0)
         
-        callback = EarlyStopping(monitor='accuracy', min_delta=1e-4, mode='max', patience=3)
+        callback = EarlyStopping(monitor='val_accuracy', min_delta=1e-3, mode='max', patience=5)
         
         acc_per_fold = []
         loss_per_fold = []
@@ -177,25 +177,26 @@ class NNModel(tune.Trainable):
                       batch_size=self.batch_size,
                       epochs=self.epochs,
                       callbacks=[callback],
-                      verbose=0)
+                      validation_split=0.2,
+                      verbose=2)
             
-            #Test loss: score[0]
-            #Test accuracy: score[1]
             scores = model.evaluate(inputs[test], targets[test], verbose=0)
-            print(f'Score for fold {fold}: {model.metrics_names[0]} of {scores[0]}; {model.metrics_names[1]} of {scores[1]}')
-            acc_per_fold.append(scores[1])
-            loss_per_fold.append(scores[0])
+            val_loss = scores['val_loss']
+            val_accuracy = scores['val_accuracy']
+            print(f'Score for fold {fold}: Validation loss of {val_loss}; Validation accuracy of {val_accuracy}')
+            acc_per_fold.append(val_accuracy)
+            loss_per_fold.append(val_loss)
             
             fold += 1
         
-        return {'accuracy': np.mean(acc_per_fold)}
+        return {'val_accuracy': np.mean(acc_per_fold)}
 
 # MAIN #
 if __name__ == "__main__":
     
     epochs_list = load_epochs()
     
-    ray.init(num_gpus=4)
+    ray.init(num_gpus=1)
     
     """
     pbt = PopulationBasedTraining(
@@ -217,14 +218,14 @@ if __name__ == "__main__":
     
     results = tune.run(
                 NNModel,
-                resources_per_trial={'gpu': 4},
+                resources_per_trial={'gpu': 1},
                 name="nn_test",
                 scheduler=scheduler,
                 search_alg=hys,
-                metric="accuracy",
+                metric="val_accuracy",
                 mode="max",
                 stop={"training_iteration": 10},
-                num_samples=10,
+                num_samples=50,
                 config={
                     "window_size": tune.quniform(50,100,50),
                     "step_size": tune.quniform(0.1,1,0.1),
@@ -242,6 +243,6 @@ if __name__ == "__main__":
                     }
               )
 
-    df = results.dataframe(metric="accuracy", mode="max")
+    df = results.dataframe(metric="val_accuracy", mode="max")
     #print(df)
     print(results.best_config)
