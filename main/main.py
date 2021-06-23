@@ -4,6 +4,7 @@ import mne
 import keras.utils
 import ray
 from tensorflow.keras.utils import Sequence
+from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.model_selection import KFold
 from ray import tune
 from ray.tune.schedulers import PopulationBasedTraining
@@ -37,7 +38,7 @@ def load_epochs():
     epochs_list = []
 
     for filename in filenames:
-        raw = lemb.load_data(os.path.join('..', 'data', filename))
+        raw = lemb.load_data(os.path.join('..','data',filename))
         raw.drop_channels('X5')  # Sync channel
         raw.apply_function(lambda x: x * 1e6, picks=['eeg'], channel_wise=False)
         raw = raw.set_eeg_reference(ref_channels='average')
@@ -54,7 +55,7 @@ def load_epochs():
     return epochs_list
 
 # Generate the data given the epoch list and some parameters
-def generate_data(epoch_list, window_size, step_size):
+def generate_data(epochs_list, window_size, step_size):
     
     active_crops = []
     labels = []
@@ -108,7 +109,7 @@ class NNModel(tune.Trainable):
     def setup(self, config):
         
         self.batch_size = 32
-        self.epochs = 10
+        self.epochs = 30
         
         self.learning_rate = 0.0
         self.accuracy = 0.0
@@ -117,7 +118,7 @@ class NNModel(tune.Trainable):
         
         window_size = int(self.config['window_size'])
         step_size = int(window_size * self.config['step_size'])
-        kernel_size = int(self.config['kernel_size']) #FIXME + 1)
+        kernel_size = int(self.config['kernel_size'] + 1)
         pool_size = int(self.config['pool_size'])
         learning_rate = self.config['learning_rate']
         temporal_filters = int(self.config['temporal_filters'])
@@ -140,10 +141,12 @@ class NNModel(tune.Trainable):
         print(f'dropout_rate: {dropout_rate}')
         print('---------------------------------------------------------------------------------')
         
-        data = generate_data(self.config['epochs_list'], window_size, step_size)
+        data = generate_data(epochs_list, window_size, step_size)
         
         inputs = np.concatenate((data['x_train'], data['x_test']), axis=0)
         targets = np.concatenate((data['y_train'], data['y_test']), axis=0)
+        
+        callback = EarlyStopping(monitor='accuracy', min_delta=1e-4, mode='max', patience=3)
         
         acc_per_fold = []
         loss_per_fold = []
@@ -173,6 +176,7 @@ class NNModel(tune.Trainable):
                       targets[train],
                       batch_size=self.batch_size,
                       epochs=self.epochs,
+                      callbacks=[callback],
                       verbose=0)
             
             #Test loss: score[0]
@@ -189,10 +193,10 @@ class NNModel(tune.Trainable):
 # MAIN #
 if __name__ == "__main__":
     
-    ray.init()
-    
     epochs_list = load_epochs()
-
+    
+    ray.init(num_gpus=4)
+    
     """
     pbt = PopulationBasedTraining(
           perturbation_interval=2,
@@ -213,26 +217,25 @@ if __name__ == "__main__":
     
     results = tune.run(
                 NNModel,
-                resources_per_trial={'gpu': 1},
+                resources_per_trial={'gpu': 4},
                 name="nn_test",
                 scheduler=scheduler,
                 search_alg=hys,
                 metric="accuracy",
                 mode="max",
-                stop={"training_iteration": 5},
-                num_samples=5,
+                stop={"training_iteration": 10},
+                num_samples=10,
                 config={
-                    "epochs_list": epochs_list,
-                    "window_size": tune.quniform(10,100,1),
+                    "window_size": tune.quniform(50,100,50),
                     "step_size": tune.quniform(0.1,1,0.1),
-                    "kernel_size": 1,#FIXME tune.quniform(2,8,2),
+                    "kernel_size": tune.quniform(2,8,2),
                     "pool_size": tune.quniform(2,3,1),
                     "optimizer": tune.choice(["adam","sgd"]),
                     "activation": tune.choice(["relu","elu"]),
                     "learning_rate": tune.loguniform(1e-5,1e-2),
                     "temporal_filters": tune.quniform(10,50,10),
                     "batch_normalization": tune.choice([True,False]),
-                    "n_conv_layers": tune.quniform(0,2,1),
+                    "n_conv_layers": tune.quniform(0,1,1),
                     "n_fc_layers": tune.quniform(0,2,1),
                     "n_neurons_2nd_layer": tune.quniform(0.2,0.75,0.05),
                     "dropout_rate": tune.choice([0,0.6])

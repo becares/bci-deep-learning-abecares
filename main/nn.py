@@ -8,7 +8,7 @@ def conv(temporal_filters=50, kernel_size=7, pool_size=2, window_size=100,
          num_classes=2, learning_rate=1e-4, optimizer='sgd', activation='relu',
          batch_normalization=False, n_conv_layers=2, n_fc_layers=2, n_neurons_2nd_layer=0.5,
          dropout_rate=0):
-
+    
     input_shape = (21, window_size, 1)
     model = Sequential()
     
@@ -21,7 +21,7 @@ def conv(temporal_filters=50, kernel_size=7, pool_size=2, window_size=100,
     model.add(Reshape((-1, temporal_filters)))
     model.add(MaxPooling1D(pool_size=pool_size))
     
-    for _ in range(n_conv_layers+1):
+    for _ in range(n_conv_layers):
         temporal_filters *= pool_size
         model.add(Conv1D(temporal_filters, kernel_size=kernel_size))
         if batch_normalization:
@@ -32,7 +32,7 @@ def conv(temporal_filters=50, kernel_size=7, pool_size=2, window_size=100,
     model.add(Flatten())
     n_neurons = model.output_shape[1]
     
-    for _ in range(n_fc_layers+1):
+    for _ in range(n_fc_layers):
         n_neurons = int(n_neurons * n_neurons_2nd_layer) 
         model.add(Dense(n_neurons))
         if batch_normalization:
