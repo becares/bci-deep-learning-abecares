@@ -1,4 +1,5 @@
 import os.path
+import argparse
 import numpy as np
 import mne
 import keras.utils
@@ -28,16 +29,30 @@ import nn
 ##### AUXILIARY FUNCTIONS #####
 
 # Loading files only once to minimize the memory access 
-def load_epochs():
+def load_epochs(subject='C'):
     
-    filenames = ('CLASubjectC1511263StLRHand.mat',
-                 'CLASubjectC1512163StLRHand.mat',
-                 'CLASubjectC1512233StLRHand.mat')
+    if subject == 'B':
+        filenames = ('CLASubjectB1510193StLRHand.mat',
+                     'CLASubjectB1510203StLRHand.mat',
+                     'CLASubjectB1512153StLRHand.mat')
+    if subject == 'C':
+        filenames = ('CLASubjectC1511263StLRHand.mat',
+                     'CLASubjectC1512163StLRHand.mat',
+                     'CLASubjectC1512233StLRHand.mat')
+    if subject == 'E':
+        filenames = ('CLASubjectE1512253StLRHand.mat',
+                     'CLASubjectE1601193StLRHand.mat',
+                     'CLASubjectE1601193StLRHand.mat')
+    if subject == 'F':
+        filenames = ('CLASubjectF1509163StLRHand.mat',
+                     'CLASubjectF1509173StLRHand.mat',
+                     'CLASubjectF1509283StLRHand.mat')
     
     # 1 epoch per file
     epochs_list = []
 
     for filename in filenames:
+        print(f'Current file:{filename}\n')
         raw = lemb.load_data(os.path.join('..','data',filename))
         raw.drop_channels('X5')  # Sync channel
         raw.apply_function(lambda x: x * 1e6, picks=['eeg'], channel_wise=False)
@@ -143,8 +158,12 @@ class NNModel(tune.Trainable):
         
         data = generate_data(epochs_list, window_size, step_size)
         
-        inputs = np.concatenate((data['x_train'], data['x_test']), axis=0)
-        targets = np.concatenate((data['y_train'], data['y_test']), axis=0)
+        # Ignore last session
+        #inputs = np.concatenate((data['x_train'], data['x_test']), axis=0)
+        #targets = np.concatenate((data['y_train'], data['y_test']), axis=0)
+        
+        inputs = data['x_train']
+        targets = data['y_train']
         
         callback = EarlyStopping(monitor='val_accuracy', min_delta=1e-3, mode='max', patience=5)
         
@@ -172,7 +191,7 @@ class NNModel(tune.Trainable):
             print('------------------------------------------------------------------------')
             print(f'Training for fold {fold} ...')
             
-            model.fit(inputs[train], 
+            history = model.fit(inputs[train], 
                       targets[train],
                       batch_size=self.batch_size,
                       epochs=self.epochs,
@@ -181,11 +200,13 @@ class NNModel(tune.Trainable):
                       verbose=2)
             
             scores = model.evaluate(inputs[test], targets[test], verbose=0)
-            val_loss = scores['val_loss']
-            val_accuracy = scores['val_accuracy']
-            print(f'Score for fold {fold}: Validation loss of {val_loss}; Validation accuracy of {val_accuracy}')
-            acc_per_fold.append(val_accuracy)
-            loss_per_fold.append(val_loss)
+            #print(scores)
+            fold_val_loss = scores[0]
+            fold_val_accuracy = scores[1]
+            print('--------------------------------------------------------------------------------------------------')
+            print(f'Score for fold {fold}: fold_val_loss of {fold_val_loss}; fold_val_accuracy of {fold_val_accuracy}')
+            acc_per_fold.append(fold_val_accuracy)
+            loss_per_fold.append(fold_val_loss)
             
             fold += 1
         
@@ -194,38 +215,32 @@ class NNModel(tune.Trainable):
 # MAIN #
 if __name__ == "__main__":
     
-    epochs_list = load_epochs()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('subject')
+    args = parser.parse_args()
+    
+    epochs_list = load_epochs(args.subject)
     
     ray.init(num_gpus=1)
     
-    """
-    pbt = PopulationBasedTraining(
-          perturbation_interval=2,
-          hyperparam_mutations={"window_size": [25,50,100],
-                                "step_size": lambda: np.arange(10,100,10),
-                                "kernel_size": [3,5,7,9],
-                                "pool_size": [2,3],
-                                "learning_rate": lambda: 10**np.random.randint(-5, -2),
-                                "temporal_filters": lambda: np.linspace(10,50,5).astype('int')
-          })
-    """
-    
-    byo = BayesOptSearch()
+    #byo = BayesOptSearch()
     hys = HyperOptSearch()
     
     hys = ConcurrencyLimiter(hys, max_concurrent=4)
     scheduler = AsyncHyperBandScheduler()
     
+    name = f'nn_test_{args.subject}'
+    
     results = tune.run(
                 NNModel,
                 resources_per_trial={'gpu': 1},
-                name="nn_test",
+                name=name,
                 scheduler=scheduler,
                 search_alg=hys,
                 metric="val_accuracy",
                 mode="max",
-                stop={"training_iteration": 10},
-                num_samples=50,
+                stop={"training_iteration": 1},
+                num_samples=250,
                 config={
                     "window_size": tune.quniform(50,100,50),
                     "step_size": tune.quniform(0.1,1,0.1),
@@ -244,5 +259,62 @@ if __name__ == "__main__":
               )
 
     df = results.dataframe(metric="val_accuracy", mode="max")
-    #print(df)
-    print(results.best_config)
+    best = results.best_config
+    
+    # Last model generation    
+    window_size = int(best['window_size'])
+    step_size = int(window_size * best['step_size'])
+    kernel_size = int(best['kernel_size'] + 1)
+    pool_size = int(best['pool_size'])
+    learning_rate = best['learning_rate']
+    temporal_filters = int(best['temporal_filters'])
+    optimizer = best['optimizer']
+    activation = best['activation']
+    batch_normalization = best['batch_normalization']
+    n_conv_layers = int(best['n_conv_layers'])
+    n_fc_layers = int(best['n_fc_layers'])
+    n_neurons_2nd_layer = best['n_neurons_2nd_layer']
+    dropout_rate = best['dropout_rate']
+    
+    print('---------------------------------------------------------------------------------')
+    print('BEST CONFIGURATION MODEL:')
+    print(f'window_size: {window_size}, step_size: {step_size},')
+    print(f'kernel_size: {kernel_size}, pool_size: {pool_size},')
+    print(f'learning_rate: {learning_rate}, temporal_filters: {temporal_filters}')
+    print(f'optimizer: {optimizer}, activation: {activation},')
+    print(f'batch_normalization: {batch_normalization}, n_conv_layers: {n_conv_layers},')
+    print(f'n_fc_layers: {n_fc_layers}, n_neurons_2nd_layer: {n_neurons_2nd_layer},')
+    print(f'dropout_rate: {dropout_rate}')
+    print('---------------------------------------------------------------------------------')
+    
+    data = generate_data(epochs_list, window_size, step_size)
+    
+    model = nn.conv(temporal_filters=temporal_filters,
+                    kernel_size=kernel_size,
+                    pool_size=pool_size,
+                    window_size=window_size,
+                    learning_rate=learning_rate,
+                    optimizer=optimizer,
+                    activation=activation,
+                    batch_normalization=batch_normalization,
+                    n_conv_layers=n_conv_layers,
+                    n_fc_layers=n_fc_layers,
+                    n_neurons_2nd_layer=n_neurons_2nd_layer,
+                    dropout_rate=dropout_rate)
+    
+    callback = EarlyStopping(monitor='accuracy', min_delta=1e-3, mode='max', patience=5)
+     
+    history = model.fit(data['x_train'], 
+                         data['y_train'],
+                         batch_size=32,
+                         epochs=100,
+                         #IGNORE EARLY STOPPING callbacks=[callback],
+                         verbose=2)
+     
+    scores = model.evaluate(data['x_test'], data['y_test'], verbose=1)
+     
+    val_loss = scores[0]
+    val_accuracy = scores[1]
+     
+    print(f'Final score: val_loss of {val_loss}; val_accuracy of {val_accuracy}')
+
