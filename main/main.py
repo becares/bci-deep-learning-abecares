@@ -117,7 +117,7 @@ def generate_data(epochs_list, window_size, step_size):
 # Epochs
 ################################################################################################
 
-def black_box(config):
+def black_box(config, checkpoint_dir=None):
         
     window_size = int(config['window_size'])
     step_size = int(window_size * config['step_size'])
@@ -217,7 +217,7 @@ if __name__ == "__main__":
     hys = ConcurrencyLimiter(hys, max_concurrent=4)
     scheduler = AsyncHyperBandScheduler()
     
-    name = f'nn_test_{args.subject}'
+    name = f'Subject_{args.subject}'
     
     results = tune.run(
               black_box,
@@ -227,7 +227,8 @@ if __name__ == "__main__":
               search_alg=hys,
               metric="val_accuracy",
               mode="max",
-              num_samples=10,
+              stop={'training_iteration': 50},
+              num_samples=250,
               config={
                   "window_size": tune.quniform(50,100,50),
                   "step_size": tune.quniform(0.1,1,0.1),
