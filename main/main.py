@@ -9,9 +9,8 @@ from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.model_selection import KFold
 from ray import tune
 from ray.tune.schedulers import AsyncHyperBandScheduler
-from ray.tune.suggest import ConcurrencyLimiter
-from ray.tune.suggest.bayesopt import BayesOptSearch
 from ray.tune.suggest.hyperopt import HyperOptSearch
+from ray.tune.stopper import MaximumIterationStopper
 import lemb
 import data
 import nn
@@ -158,7 +157,7 @@ def black_box(config, checkpoint_dir=None):
     acc_per_fold = []
     loss_per_fold = []
     
-    kfold = KFold(n_splits=10, shuffle=True) # 10-Fold Cross-Validation
+    kfold = KFold(n_splits=2, shuffle=True) # 10-Fold Cross-Validation
     
     fold = 1
     for train, test in kfold.split(inputs, targets):
@@ -211,11 +210,9 @@ if __name__ == "__main__":
     
     ray.init(num_gpus=1)
     
-    #byo = BayesOptSearch()
-    hys = HyperOptSearch(metric='val_accuracy', mode='max', n_initial_points=2)
+    hys = HyperOptSearch(gamma=0.75)
     
-    hys = ConcurrencyLimiter(hys, max_concurrent=4)
-    scheduler = AsyncHyperBandScheduler()
+    scheduler=AsyncHyperBandScheduler()
     
     name = f'Subject_{args.subject}'
     
@@ -223,12 +220,12 @@ if __name__ == "__main__":
               black_box,
               resources_per_trial={'gpu': 1},
               name=name,
-              scheduler=scheduler,
               search_alg=hys,
-              metric="val_accuracy",
-              mode="max",
-              stop={'training_iteration': 50},
-              num_samples=250,
+              mode='max',
+              metric='val_accuracy',
+              stop={'val_accuracy': 0.95},
+              scheduler=scheduler,
+              num_samples=1,
               config={
                   "window_size": tune.quniform(50,100,50),
                   "step_size": tune.quniform(0.1,1,0.1),
