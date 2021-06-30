@@ -116,88 +116,92 @@ def generate_data(epochs_list, window_size, step_size):
 # Epochs
 ################################################################################################
 
-def black_box(config, checkpoint_dir=None):
-        
-    window_size = int(config['window_size'])
-    step_size = int(window_size * config['step_size'])
-    kernel_size = int(config['kernel_size'] + 1)
-    pool_size = int(config['pool_size'])
-    learning_rate = config['learning_rate']
-    temporal_filters = int(config['temporal_filters'])
-    optimizer = config['optimizer']
-    activation = config['activation']
-    batch_normalization = config['batch_normalization']
-    n_conv_layers = int(config['n_conv_layers'])
-    n_fc_layers = int(config['n_fc_layers'])
-    n_neurons_2nd_layer = config['n_neurons_2nd_layer']
-    dropout_rate = config['dropout_rate']
+class BlackBox(tune.Trainable):
+    
+    def _setup(self, config):
+        self.window_size = int(config['window_size'])
+        self.step_size = int(window_size * config['step_size'])
+        self.kernel_size = int(config['kernel_size'] + 1)
+        self.pool_size = int(config['pool_size'])
+        self.learning_rate = config['learning_rate']
+        self.temporal_filters = int(config['temporal_filters'])
+        self.optimizer = config['optimizer']
+        self.activation = config['activation']
+        self.batch_normalization = config['batch_normalization']
+        self.n_conv_layers = int(config['n_conv_layers'])
+        self.n_fc_layers = int(config['n_fc_layers'])
+        self.n_neurons_2nd_layer = config['n_neurons_2nd_layer']
+        self.dropout_rate = config['dropout_rate']
 
-    print('---------------------------------------------------------------------------------')
-    print('Current configuration:')
-    print(f'window_size: {window_size}, step_size: {step_size},')
-    print(f'kernel_size: {kernel_size}, pool_size: {pool_size},')
-    print(f'learning_rate: {learning_rate}, temporal_filters: {temporal_filters}')
-    print(f'optimizer: {optimizer}, activation: {activation},')
-    print(f'batch_normalization: {batch_normalization}, n_conv_layers: {n_conv_layers},')
-    print(f'n_fc_layers: {n_fc_layers}, n_neurons_2nd_layer: {n_neurons_2nd_layer},')
-    print(f'dropout_rate: {dropout_rate}')
-    print('---------------------------------------------------------------------------------')
+        print('---------------------------------------------------------------------------------')
+        print('Current configuration:')
+        print(f'window_size: {window_size}, step_size: {step_size},')
+        print(f'kernel_size: {kernel_size}, pool_size: {pool_size},')
+        print(f'learning_rate: {learning_rate}, temporal_filters: {temporal_filters}')
+        print(f'optimizer: {optimizer}, activation: {activation},')
+        print(f'batch_normalization: {batch_normalization}, n_conv_layers: {n_conv_layers},')
+        print(f'n_fc_layers: {n_fc_layers}, n_neurons_2nd_layer: {n_neurons_2nd_layer},')
+        print(f'dropout_rate: {dropout_rate}')
+        print('---------------------------------------------------------------------------------')
     
-    data = generate_data(epochs_list, window_size, step_size)
-    
-    # Ignore last session
-    #inputs = np.concatenate((data['x_train'], data['x_test']), axis=0)
-    #targets = np.concatenate((data['y_train'], data['y_test']), axis=0)
-    
-    inputs = data['x_train']
-    targets = data['y_train']
-    
-    callback = EarlyStopping(monitor='val_accuracy', min_delta=1e-3, mode='max', patience=5)
-    
-    acc_per_fold = []
-    loss_per_fold = []
-    
-    kfold = KFold(n_splits=2, shuffle=True) # 10-Fold Cross-Validation
-    
-    fold = 1
-    for train, test in kfold.split(inputs, targets):
-    
-        model = nn.conv(temporal_filters=temporal_filters,
-                kernel_size=kernel_size,
-                pool_size=pool_size,
-                window_size=window_size,
-                learning_rate=learning_rate,
-                optimizer=optimizer,
-                activation=activation,
-                batch_normalization=batch_normalization,
-                n_conv_layers=n_conv_layers,
-                n_fc_layers=n_fc_layers,
-                n_neurons_2nd_layer=n_neurons_2nd_layer,
-                dropout_rate=dropout_rate)
+
+    def _train(self):
         
-        print('------------------------------------------------------------------------')
-        print(f'Training for fold {fold} ...')
+        data = generate_data(epochs_list, self.window_size, self.step_size)
         
-        history = model.fit(inputs[train], 
-                    targets[train],
-                    batch_size=32,
-                    epochs=1,
-                    callbacks=[callback],
-                    validation_split=0.2,
-                    verbose=2)
+        # Ignore last session
+        #inputs = np.concatenate((data['x_train'], data['x_test']), axis=0)
+        #targets = np.concatenate((data['y_train'], data['y_test']), axis=0)
         
-        scores = model.evaluate(inputs[test], targets[test], verbose=0)
-        #print(scores)
-        fold_val_loss = scores[0]
-        fold_val_accuracy = scores[1]
-        print('--------------------------------------------------------------------------------------------------')
-        print(f'Score for fold {fold}: fold_val_loss of {fold_val_loss}; fold_val_accuracy of {fold_val_accuracy}')
-        acc_per_fold.append(fold_val_accuracy)
-        loss_per_fold.append(fold_val_loss)
+        inputs = data['x_train']
+        targets = data['y_train']
         
-        fold += 1
-    
-    tune.report(val_accuracy=np.mean(acc_per_fold))
+        callback = EarlyStopping(monitor='val_accuracy', min_delta=1e-3, mode='max', patience=5)
+        
+        acc_per_fold = []
+        loss_per_fold = []
+        
+        kfold = KFold(n_splits=2, shuffle=True) # 10-Fold Cross-Validation
+        
+        fold = 1
+        for train, test in kfold.split(inputs, targets):
+        
+            model = nn.conv(temporal_filters=temporal_filters,
+                    kernel_size=kernel_size,
+                    pool_size=pool_size,
+                    window_size=window_size,
+                    learning_rate=learning_rate,
+                    optimizer=optimizer,
+                    activation=activation,
+                    batch_normalization=batch_normalization,
+                    n_conv_layers=n_conv_layers,
+                    n_fc_layers=n_fc_layers,
+                    n_neurons_2nd_layer=n_neurons_2nd_layer,
+                    dropout_rate=dropout_rate)
+            
+            print('------------------------------------------------------------------------')
+            print(f'Training for fold {fold} ...')
+            
+            history = model.fit(inputs[train], 
+                        targets[train],
+                        batch_size=32,
+                        epochs=1,
+                        callbacks=[callback],
+                        validation_split=0.2,
+                        verbose=2)
+            
+            scores = model.evaluate(inputs[test], targets[test], verbose=0)
+            #print(scores)
+            fold_val_loss = scores[0]
+            fold_val_accuracy = scores[1]
+            print('--------------------------------------------------------------------------------------------------')
+            print(f'Score for fold {fold}: fold_val_loss of {fold_val_loss}; fold_val_accuracy of {fold_val_accuracy}')
+            acc_per_fold.append(fold_val_accuracy)
+            loss_per_fold.append(fold_val_loss)
+            
+            fold += 1
+        
+        return {'val_accuracy': np.mean(acc_per_fold)}
 
 # MAIN #
 if __name__ == "__main__":
@@ -210,20 +214,19 @@ if __name__ == "__main__":
     
     ray.init(num_gpus=1)
     
-    hys = HyperOptSearch(gamma=0.75)
-    
+    hys = HyperOptSearch()
     scheduler=AsyncHyperBandScheduler()
     
     name = f'Subject_{args.subject}'
     
     results = tune.run(
-              black_box,
+              BlackBox,
               resources_per_trial={'gpu': 1},
               name=name,
               search_alg=hys,
               mode='max',
               metric='val_accuracy',
-              stop={'val_accuracy': 0.95},
+              stop={'training_iteration': 50},
               scheduler=scheduler,
               num_samples=1,
               config={
