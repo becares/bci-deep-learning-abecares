@@ -121,7 +121,7 @@ class BlackBox(tune.Trainable):
     
     def _setup(self, config):
         self.window_size = int(config['window_size'])
-        self.step_size = int(window_size * config['step_size'])
+        self.step_size = int(self.window_size * config['step_size'])
         self.kernel_size = int(config['kernel_size'] + 1)
         self.pool_size = int(config['pool_size'])
         self.learning_rate = config['learning_rate']
@@ -136,13 +136,13 @@ class BlackBox(tune.Trainable):
 
         print('---------------------------------------------------------------------------------')
         print('Current configuration:')
-        print(f'window_size: {window_size}, step_size: {step_size},')
-        print(f'kernel_size: {kernel_size}, pool_size: {pool_size},')
-        print(f'learning_rate: {learning_rate}, temporal_filters: {temporal_filters}')
-        print(f'optimizer: {optimizer}, activation: {activation},')
-        print(f'batch_normalization: {batch_normalization}, n_conv_layers: {n_conv_layers},')
-        print(f'n_fc_layers: {n_fc_layers}, n_neurons_2nd_layer: {n_neurons_2nd_layer},')
-        print(f'dropout_rate: {dropout_rate}')
+        print(f'window_size: {self.window_size}, step_size: {self.step_size},')
+        print(f'kernel_size: {self.kernel_size}, pool_size: {self.pool_size},')
+        print(f'learning_rate: {self.learning_rate}, temporal_filters: {self.temporal_filters}')
+        print(f'optimizer: {self.optimizer}, activation: {self.activation},')
+        print(f'batch_normalization: {self.batch_normalization}, n_conv_layers: {self.n_conv_layers},')
+        print(f'n_fc_layers: {self.n_fc_layers}, n_neurons_2nd_layer: {self.n_neurons_2nd_layer},')
+        print(f'dropout_rate: {self.dropout_rate}')
         print('---------------------------------------------------------------------------------')
     
 
@@ -168,18 +168,18 @@ class BlackBox(tune.Trainable):
         fold = 1
         for train, test in kfold.split(inputs, targets):
         
-            model = nn.conv(temporal_filters=temporal_filters,
-                    kernel_size=kernel_size,
-                    pool_size=pool_size,
-                    window_size=window_size,
-                    learning_rate=learning_rate,
-                    optimizer=optimizer,
-                    activation=activation,
-                    batch_normalization=batch_normalization,
-                    n_conv_layers=n_conv_layers,
-                    n_fc_layers=n_fc_layers,
-                    n_neurons_2nd_layer=n_neurons_2nd_layer,
-                    dropout_rate=dropout_rate)
+            model = nn.conv(temporal_filters=self.temporal_filters,
+                    kernel_size=self.kernel_size,
+                    pool_size=self.pool_size,
+                    window_size=self.window_size,
+                    learning_rate=self.learning_rate,
+                    optimizer=self.optimizer,
+                    activation=self.activation,
+                    batch_normalization=self.batch_normalization,
+                    n_conv_layers=self.n_conv_layers,
+                    n_fc_layers=self.n_fc_layers,
+                    n_neurons_2nd_layer=self.n_neurons_2nd_layer,
+                    dropout_rate=self.dropout_rate)
             
             print('------------------------------------------------------------------------')
             print(f'Training for fold {fold} ...')
