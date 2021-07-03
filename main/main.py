@@ -8,6 +8,7 @@ import pandas as pd
 import ray
 from tensorflow.keras.utils import Sequence
 from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import CSVLogger
 from sklearn.model_selection import KFold
 from ray import tune
 from ray.tune.schedulers import AsyncHyperBandScheduler
@@ -151,6 +152,8 @@ class BlackBox(tune.Trainable):
         
         data = generate_data(epochs_list, self.window_size, self.step_size)
         
+        cwd = os.getcwd()        
+
         # Ignore last session
         #inputs = np.concatenate((data['x_train'], data['x_test']), axis=0)
         #targets = np.concatenate((data['y_train'], data['y_test']), axis=0)
@@ -158,8 +161,8 @@ class BlackBox(tune.Trainable):
         inputs = data['x_train']
         targets = data['y_train']
         
-        callback = EarlyStopping(monitor='val_accuracy', min_delta=1e-3, mode='max', patience=5)
-        
+        early_stopping = EarlyStopping(monitor='val_accuracy', min_delta=1e-3, mode='max', patience=5)        
+
         acc_per_fold = []
         loss_per_fold = []
         folds_histories = {}
@@ -168,7 +171,7 @@ class BlackBox(tune.Trainable):
         
         fold = 1
         for train, test in kfold.split(inputs, targets):
-        
+            csv_logger = CSVLogger(f'fold{fold}_history.csv')
             model = nn.conv(temporal_filters=self.temporal_filters,
                     kernel_size=self.kernel_size,
                     pool_size=self.pool_size,
@@ -189,7 +192,7 @@ class BlackBox(tune.Trainable):
                         targets[train],
                         batch_size=32,
                         epochs=1,
-                        callbacks=[callback],
+                        callbacks=[early_stopping, csv_logger],
                         validation_split=0.2,
                         verbose=2)
             
@@ -201,27 +204,10 @@ class BlackBox(tune.Trainable):
             print(f'Score for fold {fold}: fold_val_loss of {fold_val_loss}; fold_val_accuracy of {fold_val_accuracy}')
             acc_per_fold.append(fold_val_accuracy)
             loss_per_fold.append(fold_val_loss)
-            
-            fold_history_df = pd.DataFrame(history.history)
-            fold_scores_df = pd.DataFrame(scores)
-            history_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/{fold}/history.csv'
-            scores_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/{fold}/scores.csv'
-            os.makedirs(f'home/keras/ray_results/{name}/{self._experiment_id}/{fold}', exist_ok=True)
-            with open(history_df_csv_file, mode='w') as h:
-                fold_history_df.to_csv(h)
-            
-            with open(scores_df_csv_file, mode='w') as s:
-                fold_scores_df.to_csv(s)
-                
+                                       
             fold += 1
-        
-        trial_results = {'val_loss': np.mean(loss_per_fold), 'val_accuracy': np.mean(acc_per_fold)}
-        trial_results_df = pd.DataFrame(trial_results)
-        trial_results_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/trial_results.csv'
-        with open(trial_results_df_csv_file, mode='w') as t:
-                trial_results_df.to_csv(t)
-        
-        return trial_results
+                       
+        return {'val_loss': np.mean(loss_per_fold), 'val_accuracy': np.mean(acc_per_fold)}
 
 # MAIN #
 if __name__ == "__main__":
@@ -231,9 +217,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     epochs_list = load_epochs(args.subject)
-    
+    cwd = os.getcwd()
     ray.init(num_gpus=1)
-    
+        
     hys = HyperOptSearch()
     scheduler=AsyncHyperBandScheduler()
     
@@ -307,28 +293,24 @@ if __name__ == "__main__":
                     n_conv_layers=n_conv_layers,
                     n_fc_layers=n_fc_layers,
                     n_neurons_2nd_layer=n_neurons_2nd_layer,
-                    dropout_rate=dropout_rate)
-    
-    callback = EarlyStopping(monitor='accuracy', min_delta=1e-3, mode='max', patience=5)
+                    dropout_rate=dropout_rate)    
+
+    early_stopping = EarlyStopping(monitor='accuracy', min_delta=1e-3, mode='max', patience=5)
+    csv_logger = CSVLogger(fr'/home/keras/ray_results/{name}/final_model_history.csv')
      
     history = model.fit(data['x_train'], 
                          data['y_train'],
                          batch_size=32,
                          epochs=100,
-                         callbacks=[callback],
+                         callbacks=[early_stopping, csv_logger],
                          validation_split=0.2,
                          verbose=2)
      
     scores = model.evaluate(data['x_test'], data['y_test'], verbose=1)
+    model.save(fr'/home/keras/ray_results/{name}/final_model_{name}')
      
     val_loss = scores[0]
     val_accuracy = scores[1]
-    
-    hist = {'history': history.history, 'scores': scores}
-    hist_df = pd.DataFrame(hist)
-    df_csv_file = f'/home/keras/ray_results/{name}/final_model.csv'
-    with open(df_csv_file, mode='w') as f:
-        fold_histories_df.to_csv(f)
-     
+          
     print(f'Final score: val_loss of {val_loss}; val_accuracy of {val_accuracy}')
 
