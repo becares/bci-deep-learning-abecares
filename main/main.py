@@ -1,4 +1,5 @@
 import os.path
+import os
 import argparse
 import numpy as np
 import mne
@@ -205,8 +206,10 @@ class BlackBox(tune.Trainable):
             fold_scores_df = pd.DataFrame(scores)
             history_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/{fold}/history.csv'
             scores_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/{fold}/scores.csv'
-            with open(history_df_csv_file, mode='w') as h:
-                fold_history_df.to_csv(h)
+            os.makedirs(f'home/keras/ray_results/{name}/{self._experiment_id}/{fold}', exist_ok=True)
+	   
+	    with open(history_df_csv_file, mode='w') as h:
+            	fold_history_df.to_csv(h)
             
             with open(scores_df_csv_file, mode='w') as s:
                 fold_scores_df.to_csv(s)
@@ -216,7 +219,7 @@ class BlackBox(tune.Trainable):
         trial_results = {'val_loss': np.mean(loss_per_fold), 'val_accuracy': np.mean(acc_per_fold)}
         trial_results_df = pd.DataFrame(trial_results)
         trial_results_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/trial_results.csv'
-        with open(history_df_csv_file, mode='w') as t:
+        with open(trial_results_df_csv_file, mode='w') as t:
                 trial_results_df.to_csv(t)
         
         return trial_results
