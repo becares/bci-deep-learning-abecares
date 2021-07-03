@@ -206,7 +206,7 @@ class BlackBox(tune.Trainable):
             fold += 1
         
         fold_histories_df = pd.DataFrame(folds_histories)
-        df_csv_file = f'../results_03072021/{name}/{self.experiment_id}.csv'
+        df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}.csv'
         with open(df_csv_file, mode='w') as f:
             fold_histories_df.to_csv(f)
         
@@ -315,7 +315,7 @@ if __name__ == "__main__":
     
     hist = {'history': history.history, 'scores': scores}
     hist_df = pd.DataFrame(hist)
-    df_csv_file = f'../results_03072021/{name}/final_model.csv'
+    df_csv_file = f'/home/keras/ray_results/{name}/final_model.csv'
     with open(df_csv_file, mode='w') as f:
         fold_histories_df.to_csv(f)
      
