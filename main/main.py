@@ -201,16 +201,25 @@ class BlackBox(tune.Trainable):
             acc_per_fold.append(fold_val_accuracy)
             loss_per_fold.append(fold_val_loss)
             
-            folds_histories[str(fold)] = {'history': history.history, 'scores': scores}
+            fold_history_df = pd.DataFrame(history.history)
+            fold_scores_df = pd.DataFrame(scores)
+            history_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/{fold}/history.csv'
+            scores_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/{fold}/scores.csv'
+            with open(history_df_csv_file, mode='w') as h:
+                fold_history_df.to_csv(h)
             
+            with open(scores_df_csv_file, mode='w') as s:
+                fold_scores_df.to_csv(s)
+                
             fold += 1
         
-        fold_histories_df = pd.DataFrame(folds_histories)
-        df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}.csv'
-        with open(df_csv_file, mode='w') as f:
-            fold_histories_df.to_csv(f)
+        trial_results = {'val_loss': np.mean(loss_per_fold), 'val_accuracy': np.mean(acc_per_fold)}
+        trial_results_df = pd.DataFrame(trial_results)
+        trial_results_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/trial_results.csv'
+        with open(history_df_csv_file, mode='w') as t:
+                trial_results_df.to_csv(t)
         
-        return {'val_loss': np.mean(loss_per_fold), 'val_accuracy': np.mean(acc_per_fold)}
+        return trial_results
 
 # MAIN #
 if __name__ == "__main__":
