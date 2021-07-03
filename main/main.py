@@ -6,10 +6,13 @@ import mne
 import keras.utils
 import pandas as pd
 import ray
+from keras.callbacks import Callback
+import matplotlib.pyplot as plt
 from tensorflow.keras.utils import Sequence
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.callbacks import CSVLogger
 from sklearn.model_selection import KFold
+from scikitplot.metrics import plot_confusion_matrix, plot_roc
 from ray import tune
 from ray.tune.schedulers import AsyncHyperBandScheduler
 from ray.tune.suggest.hyperopt import HyperOptSearch
@@ -294,6 +297,31 @@ if __name__ == "__main__":
                     n_fc_layers=n_fc_layers,
                     n_neurons_2nd_layer=n_neurons_2nd_layer,
                     dropout_rate=dropout_rate)    
+    
+    class PerformanceVisualizationCallback(Callback):
+        def __init__(self, model, validation_data:
+            super().__init__()
+            self.model = model
+            self.validation_data = validation_data
+
+        def on_epoch_end(self, epoch, logs={}):
+            y_pred = np.asarray(self.model.predict(self.validation_data[0]))
+            y_true = self.validation_data[1]             
+            y_pred_class = np.argmax(y_pred, axis=1)
+
+            # plot and save confusion matrix
+            fig, ax = plt.subplots(figsize=(16,12))
+            plot_confusion_matrix(y_true, y_pred_class, ax=ax)
+            fig.savefig(fr'/home/keras/ray_results/{name}/confusion_matrix_epoch_{epoch}')
+
+            # plot and save roc curve
+            fig, ax = plt.subplots(figsize=(16,12))
+            plot_roc(y_true, y_pred, ax=ax)
+            fig.savefig(fr'/home/keras/ray_results/{name}/roc_curve_epoch_{epoch}')
+    
+    performance_cbk = PerformanceVisualizationCallback(
+                      model=model,
+                      validation_data=data['y_test'])
 
     early_stopping = EarlyStopping(monitor='accuracy', min_delta=1e-3, mode='max', patience=5)
     csv_logger = CSVLogger(fr'/home/keras/ray_results/{name}/final_model_history.csv')
@@ -302,12 +330,12 @@ if __name__ == "__main__":
                          data['y_train'],
                          batch_size=32,
                          epochs=100,
-                         callbacks=[early_stopping, csv_logger],
+                         callbacks=[early_stopping, csv_logger, performance_cbk],
                          validation_split=0.2,
                          verbose=2)
      
     scores = model.evaluate(data['x_test'], data['y_test'], verbose=1)
-    model.save(fr'/home/keras/ray_results/{name}/final_model_{name}')
+    #model.save(fr'/home/keras/ray_results/{name}/final_model_{name}')
      
     val_loss = scores[0]
     val_accuracy = scores[1]
