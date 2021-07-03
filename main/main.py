@@ -207,9 +207,8 @@ class BlackBox(tune.Trainable):
             history_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/{fold}/history.csv'
             scores_df_csv_file = f'/home/keras/ray_results/{name}/{self._experiment_id}/{fold}/scores.csv'
             os.makedirs(f'home/keras/ray_results/{name}/{self._experiment_id}/{fold}', exist_ok=True)
-	   
-	    with open(history_df_csv_file, mode='w') as h:
-            	fold_history_df.to_csv(h)
+            with open(history_df_csv_file, mode='w') as h:
+                fold_history_df.to_csv(h)
             
             with open(scores_df_csv_file, mode='w') as s:
                 fold_scores_df.to_csv(s)
