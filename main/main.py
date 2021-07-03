@@ -3,6 +3,7 @@ import argparse
 import numpy as np
 import mne
 import keras.utils
+import pandas as pd
 import ray
 from tensorflow.keras.utils import Sequence
 from tensorflow.keras.callbacks import EarlyStopping
@@ -160,6 +161,7 @@ class BlackBox(tune.Trainable):
         
         acc_per_fold = []
         loss_per_fold = []
+        folds_histories = {}
         
         kfold = KFold(n_splits=2, shuffle=True) # 10-Fold Cross-Validation
         
@@ -199,9 +201,16 @@ class BlackBox(tune.Trainable):
             acc_per_fold.append(fold_val_accuracy)
             loss_per_fold.append(fold_val_loss)
             
+            folds_histories[str(fold)] = {'history': history.history, 'scores': scores}
+            
             fold += 1
         
-        return {'val_accuracy': np.mean(acc_per_fold)}
+        fold_histories_df = pd.DataFrame(folds_histories)
+        df_csv_file = f'../results_03072021/{name}/{self.experiment_id}.csv'
+        with open(df_csv_file, mode='w') as f:
+            fold_histories_df.to_csv(f)
+        
+        return {'val_loss': np.mean(loss_per_fold), 'val_accuracy': np.mean(acc_per_fold)}
 
 # MAIN #
 if __name__ == "__main__":
@@ -217,7 +226,7 @@ if __name__ == "__main__":
     hys = HyperOptSearch()
     scheduler=AsyncHyperBandScheduler()
     
-    name = f'Subject_{args.subject}'
+    name = f'subject_{args.subject}'
     
     results = tune.run(
               BlackBox,
@@ -226,7 +235,7 @@ if __name__ == "__main__":
               search_alg=hys,
               mode='max',
               metric='val_accuracy',
-              stop={'training_iteration': 50},
+              stop={'training_iteration': 1},
               scheduler=scheduler,
               num_samples=1,
               config={
@@ -303,6 +312,12 @@ if __name__ == "__main__":
      
     val_loss = scores[0]
     val_accuracy = scores[1]
+    
+    hist = {'history': history.history, 'scores': scores}
+    hist_df = pd.DataFrame(hist)
+    df_csv_file = f'../results_03072021/{name}/final_model.csv'
+    with open(df_csv_file, mode='w') as f:
+        fold_histories_df.to_csv(f)
      
     print(f'Final score: val_loss of {val_loss}; val_accuracy of {val_accuracy}')
 
