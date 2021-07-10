@@ -7,7 +7,7 @@ event_id = {'left/hand': 1,'right/hand': 2, 'passive': 3, 'left/leg': 4,
             'exp/start': 93}
 
 
-def load_data(filename):
+def load_data(filename, drop_half=False):
     """
     Reads a data file from the "Large EEG Motor-Imagery BCI" datasets.
 
@@ -27,6 +27,8 @@ def load_data(filename):
     sfreq = ml_data['sampFreq'][0, 0]
     markers = ml_data['marker']
     data = ml_data['data'] * 10e-6  # From uV to V.
+    if drop_half:
+        data /= 2
     channel_names = ml_data['chnames'][:, 0].tolist()
     channel_names = [name[0] for name in channel_names]
     n_channels = len(channel_names)

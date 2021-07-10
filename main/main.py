@@ -31,7 +31,23 @@ import nn
 ##### AUXILIARY FUNCTIONS #####
 
 # Loading files only once to minimize the memory access 
-def load_epochs(subject='C'):
+def create_epochs(filename, drop_half=False):
+    print(f'Current file:{filename}')
+    raw = lemb.load_data(os.path.join('..','data',filename), drop_half=drop_half)
+    raw.drop_channels('X5')  # Sync channel
+    raw.apply_function(lambda x: x * 1e6, picks=['eeg'], channel_wise=False)
+    raw = raw.set_eeg_reference(ref_channels='average')
+    raw.filter(0.1, 40)
+    raw.apply_function(data.standarize, picks=['eeg'], channel_wise=True)
+    events = mne.find_events(raw, stim_channel='STI101', output='step')
+
+    active_events_id = {k: lemb.event_id[k]
+                        for k in ('left/hand', 'right/hand')}
+    epochs = mne.Epochs(raw, events,  event_id=active_events_id, baseline=None,
+                        tmin=0.0, tmax=1.0, preload=True)
+    return epochs
+    
+def load_epochs(subject='C', size=100):
     
     if subject == 'B':
         filenames = ('CLASubjectB1510193StLRHand.mat',
@@ -52,22 +68,32 @@ def load_epochs(subject='C'):
     
     # 1 epoch per file
     epochs_list = []
-
-    for filename in filenames:
-        print(f'Current file:{filename}\n')
-        raw = lemb.load_data(os.path.join('..','data',filename))
-        raw.drop_channels('X5')  # Sync channel
-        raw.apply_function(lambda x: x * 1e6, picks=['eeg'], channel_wise=False)
-        raw = raw.set_eeg_reference(ref_channels='average')
-        raw.filter(0.1, 40)
-        raw.apply_function(data.standarize, picks=['eeg'], channel_wise=True)
-        events = mne.find_events(raw, stim_channel='STI101', output='step')
-
-        active_events_id = {k: lemb.event_id[k]
-                            for k in ('left/hand', 'right/hand')}
-        epochs = mne.Epochs(raw, events,  event_id=active_events_id, baseline=None,
-                            tmin=0.0, tmax=1.0, preload=True)
-        epochs_list.append(epochs)
+    
+    # This is ugly as hell but its a temporary solution
+    if size==75:
+        epochs1 = create_epochs(filename[0], drop_half=False)
+        epochs2 = create_epochs(filename[1], drop_half=True)
+        epochs3 = create_epochs(filename[2], drop_half=False)
+        epochs_list.append(epochs1)
+        epochs_list.append(epochs2)
+        epochs_list.append(epochs3)
+    
+    if size==50:
+        epochs1 = create_epochs(filename[0], drop_half=False)
+        epochs3 = create_epochs(filename[2], drop_half=False)
+        epochs_list.append(epochs1)
+        epochs_list.append(epochs3)
+        
+    if size==25:
+        epochs1 = create_epochs(filename[0], drop_half=True)
+        epochs3 = create_epochs(filename[2], drop_half=False)
+        epochs_list.append(epochs1)
+        epochs_list.append(epochs3)
+    
+    else:
+        for filename in filenames:
+            epochs = create_epochs(filename)
+            epochs_list.append(epochs)
     
     return epochs_list
 
@@ -78,7 +104,7 @@ def generate_data(epochs_list, window_size, step_size):
     labels = []
 
     for epochs in epochs_list:
-        crops = data.crop_epochs(epochs, window_size, step_size)
+        crops, last = data.crop_epochs(epochs, window_size, step_size)
         active_crops.append(crops[0])
         labels.append(crops[1])
 
@@ -101,7 +127,8 @@ def generate_data(epochs_list, window_size, step_size):
     return {'x_train': x_train, 
             'y_train': y_train,
             'x_test': x_test,
-            'y_test': y_test
+            'y_test': y_test,
+            'last_size': last
     }
 
 ######################################## PARAMETER LIST ########################################
@@ -168,7 +195,7 @@ class BlackBox(tune.Trainable):
         loss_per_fold = []
         folds_histories = {}
         
-        kfold = KFold(n_splits=10, shuffle=True) # 10-Fold Cross-Validation
+        kfold = KFold(n_splits=2, shuffle=True) # 10-Fold Cross-Validation
         
         fold = 1
         for train, test in kfold.split(inputs, targets):
@@ -192,7 +219,7 @@ class BlackBox(tune.Trainable):
             history = model.fit(inputs[train], 
                         targets[train],
                         batch_size=32,
-                        epochs=100,
+                        epochs=1,
                         callbacks=[early_stopping, csv_logger],
                         validation_split=0.2,
                         verbose=2)
@@ -219,9 +246,10 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument('subject')
+    parser.add_argument('size')
     args = parser.parse_args()
     
-    epochs_list = load_epochs(args.subject)
+    epochs_list = load_epochs(args.subject, args.size)
     cwd = os.getcwd()
     ray.init(num_gpus=1)
         
@@ -239,7 +267,7 @@ if __name__ == "__main__":
               metric='val_accuracy',
               stop={'training_iteration': 1},
               scheduler=scheduler,
-              num_samples=250,
+              num_samples=1,
               config={
                   "window_size": tune.quniform(50,100,50),
                   "step_size": tune.quniform(0.1,1,0.1),
@@ -306,7 +334,7 @@ if __name__ == "__main__":
     history = model.fit(data['x_train'], 
                          data['y_train'],
                          batch_size=32,
-                         epochs=100,
+                         epochs=1,
                          validation_split=0.2,
                          callbacks=[early_stopping, csv_logger],
                          verbose=2)
@@ -322,5 +350,5 @@ if __name__ == "__main__":
     val_accuracy = scores[1]
           
     print(f'Final score: val_loss of {val_loss}; val_accuracy of {val_accuracy}')
-    print('Confusion matrix:', matrix)
-
+    print('Confusion matrix:')
+    print(matrix)
