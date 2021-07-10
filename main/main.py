@@ -47,7 +47,7 @@ def create_epochs(filename, drop_half=False):
                         tmin=0.0, tmax=1.0, preload=True)
     return epochs
     
-def load_epochs(subject='C', size=100):
+def load_epochs(subject='C', size=25):
     
     if subject == 'B':
         filenames = ('CLASubjectB1510193StLRHand.mat',
@@ -71,26 +71,30 @@ def load_epochs(subject='C', size=100):
     
     # This is ugly as hell but its a temporary solution
     if size==75:
-        epochs1 = create_epochs(filename[0], drop_half=False)
-        epochs2 = create_epochs(filename[1], drop_half=True)
-        epochs3 = create_epochs(filename[2], drop_half=False)
+        print('*********************Current data crop: 75**************************')
+        epochs1 = create_epochs(filenames[0], drop_half=False)
+        epochs2 = create_epochs(filenames[1], drop_half=True)
+        epochs3 = create_epochs(filenames[2], drop_half=False)
         epochs_list.append(epochs1)
         epochs_list.append(epochs2)
         epochs_list.append(epochs3)
     
     if size==50:
-        epochs1 = create_epochs(filename[0], drop_half=False)
-        epochs3 = create_epochs(filename[2], drop_half=False)
+        print('*********************Current data crop: 50**************************')
+        epochs1 = create_epochs(filenames[0], drop_half=False)
+        epochs3 = create_epochs(filenames[2], drop_half=False)
         epochs_list.append(epochs1)
         epochs_list.append(epochs3)
         
     if size==25:
-        epochs1 = create_epochs(filename[0], drop_half=True)
-        epochs3 = create_epochs(filename[2], drop_half=False)
+        print('*********************Current data crop: 25**************************')
+        epochs1 = create_epochs(filenames[0], drop_half=True)
+        epochs3 = create_epochs(filenames[2], drop_half=False)
         epochs_list.append(epochs1)
         epochs_list.append(epochs3)
     
-    else:
+    if size==100:
+        print('*********************Current data crop: 100**************************')
         for filename in filenames:
             epochs = create_epochs(filename)
             epochs_list.append(epochs)
@@ -195,7 +199,7 @@ class BlackBox(tune.Trainable):
         loss_per_fold = []
         folds_histories = {}
         
-        kfold = KFold(n_splits=2, shuffle=True) # 10-Fold Cross-Validation
+        kfold = KFold(n_splits=10, shuffle=True) # 10-Fold Cross-Validation
         
         fold = 1
         for train, test in kfold.split(inputs, targets):
@@ -219,7 +223,7 @@ class BlackBox(tune.Trainable):
             history = model.fit(inputs[train], 
                         targets[train],
                         batch_size=32,
-                        epochs=1,
+                        epochs=100,
                         callbacks=[early_stopping, csv_logger],
                         validation_split=0.2,
                         verbose=2)
@@ -246,10 +250,9 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument('subject')
-    parser.add_argument('size')
     args = parser.parse_args()
     
-    epochs_list = load_epochs(args.subject, args.size)
+    epochs_list = load_epochs(args.subject)
     cwd = os.getcwd()
     ray.init(num_gpus=1)
         
@@ -267,7 +270,7 @@ if __name__ == "__main__":
               metric='val_accuracy',
               stop={'training_iteration': 1},
               scheduler=scheduler,
-              num_samples=1,
+              num_samples=250,
               config={
                   "window_size": tune.quniform(50,100,50),
                   "step_size": tune.quniform(0.1,1,0.1),
@@ -334,7 +337,7 @@ if __name__ == "__main__":
     history = model.fit(data['x_train'], 
                          data['y_train'],
                          batch_size=32,
-                         epochs=1,
+                         epochs=100,
                          validation_split=0.2,
                          callbacks=[early_stopping, csv_logger],
                          verbose=2)
