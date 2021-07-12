@@ -47,7 +47,7 @@ def create_epochs(filename, drop_half=False):
                         tmin=0.0, tmax=1.0, preload=True)
     return epochs
     
-def load_epochs(subject='C', size=25):
+def load_epochs(subject, size):
     
     if subject == 'B':
         filenames = ('CLASubjectB1510193StLRHand.mat',
@@ -250,16 +250,19 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument('subject')
+    parser.add_argument('size')
     args = parser.parse_args()
+
+    size = int(args.size)
     
-    epochs_list = load_epochs(args.subject)
+    epochs_list = load_epochs(args.subject, size)
     cwd = os.getcwd()
     ray.init(num_gpus=1)
         
     hys = HyperOptSearch()
     scheduler=AsyncHyperBandScheduler()
     
-    name = f'subject_{args.subject}'
+    name = f'subject_{args.subject}{size}'
     
     results = tune.run(
               BlackBox,
