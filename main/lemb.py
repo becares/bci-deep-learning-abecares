@@ -27,8 +27,14 @@ def load_data(filename, drop_half=False):
     sfreq = ml_data['sampFreq'][0, 0]
     markers = ml_data['marker']
     data = ml_data['data'] * 10e-6  # From uV to V.
+    print(np.shape(data))
+    print(np.shape(markers))
     if drop_half:
-        data /= 2
+        size = int(len(data)/2)
+        data = data[:size]
+        markers = markers[:size]
+        print(np.shape(data))
+        print(np.shape(markers))
     channel_names = ml_data['chnames'][:, 0].tolist()
     channel_names = [name[0] for name in channel_names]
     n_channels = len(channel_names)
