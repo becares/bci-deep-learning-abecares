@@ -40,7 +40,7 @@ def crop_epochs(epochs, window_size, step_size):
             i_crop += 1
             offset += step_size
     assert i_crop == crops_per_epoch * n_epochs, "Incorrect number of crops"
-    return crops, labels
+    return (crops, labels), crops_per_epoch
 
 
 def crop_passive(raw, events, activity_duration, window_size, step_size,
