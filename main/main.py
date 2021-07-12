@@ -132,8 +132,7 @@ def generate_data(epochs_list, window_size, step_size):
             'y_train': y_train,
             'x_test': x_test,
             'y_test': y_test,
-            'crops_per_epoch': last
-    }
+            'crops_per_epoch': last}
 
 ######################################## PARAMETER LIST ########################################
 # Learning rate in logarithmic scale, 10 samples -> [10**-2, 10**-5] // np.logspace(-2, -5, 10)
