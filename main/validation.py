@@ -141,7 +141,7 @@ if __name__ == '__main__':
     old_val_acc_mean = np.mean(old_val_accs)
     old_val_acc_std = np.std(old_val_accs)
     
-    old_val_acc_mean = np.mean(new_val_accs)
+    new_val_acc_mean = np.mean(new_val_accs)
     new_val_acc_std = np.std(new_val_accs)
     
     print(f'old_val_acc_std: {old_val_acc_std}, new_val_acc_std: {new_val_acc_std}')
