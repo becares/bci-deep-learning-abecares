@@ -1,0 +1,15 @@
+{
+  "activation": "elu",
+  "batch_normalization": true,
+  "dropout_rate": 0,
+  "kernel_size": 6.0,
+  "learning_rate": 0.0009148662152838183,
+  "n_conv_layers": 1.0,
+  "n_fc_layers": 1.0,
+  "n_neurons_2nd_layer": 0.55,
+  "optimizer": "adam",
+  "pool_size": 2.0,
+  "step_size": 0.5,
+  "temporal_filters": 40.0,
+  "window_size": 100.0
+}
