@@ -1,0 +1,194 @@
+2021-07-13 08:46:37.732619: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+*********************Current data crop: 100**************************
+Current file:CLASubjectF1509163StLRHand.mat
+(689600, 22)
+(689600, 1)
+Creating RawArray with float64 data, n_channels=23, n_times=689600
+    Range : 0 ... 689599 =      0.000 ...  3447.995 secs
+Ready.
+EEG channel type selected for re-referencing
+Applying average reference.
+Applying a custom EEG reference.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.1 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.10
+- Lower transition bandwidth: 0.10 Hz (-6 dB cutoff frequency: 0.05 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 6601 samples (33.005 sec)
+
+1936 events found
+Event IDs: [ 0  1  2 90 91 92 99]
+Not setting metadata
+Not setting metadata
+960 matching events found
+No baseline correction applied
+0 projection items activated
+Loading data for 960 events and 201 original time points ...
+0 bad epochs dropped
+Current file:CLASubjectF1509173StLRHand.mat
+(664600, 22)
+(664600, 1)
+Creating RawArray with float64 data, n_channels=23, n_times=664600
+    Range : 0 ... 664599 =      0.000 ...  3322.995 secs
+Ready.
+EEG channel type selected for re-referencing
+Applying average reference.
+Applying a custom EEG reference.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.1 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.10
+- Lower transition bandwidth: 0.10 Hz (-6 dB cutoff frequency: 0.05 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 6601 samples (33.005 sec)
+
+1932 events found
+Event IDs: [ 0  1  2  3 91 92 99]
+Not setting metadata
+Not setting metadata
+652 matching events found
+No baseline correction applied
+0 projection items activated
+Loading data for 652 events and 201 original time points ...
+0 bad epochs dropped
+Current file:CLASubjectF1509283StLRHand.mat
+(666800, 22)
+(666800, 1)
+Creating RawArray with float64 data, n_channels=23, n_times=666800
+    Range : 0 ... 666799 =      0.000 ...  3333.995 secs
+Ready.
+EEG channel type selected for re-referencing
+Applying average reference.
+Applying a custom EEG reference.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.1 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.10
+- Lower transition bandwidth: 0.10 Hz (-6 dB cutoff frequency: 0.05 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 6601 samples (33.005 sec)
+
+1932 events found
+Event IDs: [ 0  1  2  3 91 92 99]
+Not setting metadata
+Not setting metadata
+640 matching events found
+No baseline correction applied
+0 projection items activated
+Loading data for 640 events and 201 original time points ...
+0 bad epochs dropped
+---------------------------------------------------------------------------------
+BEST CONFIGURATION MODEL:
+window_size: 100, step_size: 10,
+kernel_size: 9, pool_size: 3,
+learning_rate: 0.0003200077962021841, temporal_filters: 50
+optimizer: adam, activation: relu,
+batch_normalization: False, n_conv_layers: 1,
+n_fc_layers: 2, n_neurons_2nd_layer: 0.7000000000000001,
+dropout_rate: 0.6
+---------------------------------------------------------------------------------
+2021-07-13 08:46:46.921015: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
+2021-07-13 08:46:46.951269: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 08:46:46.951753: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce GTX TITAN Black computeCapability: 3.5
+coreClock: 0.98GHz coreCount: 15 deviceMemorySize: 5.94GiB deviceMemoryBandwidth: 312.92GiB/s
+2021-07-13 08:46:46.951792: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-13 08:46:46.986876: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-13 08:46:46.988116: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-07-13 08:46:47.002341: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-07-13 08:46:47.014834: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-07-13 08:46:47.016045: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-07-13 08:46:47.037889: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-07-13 08:46:47.038182: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 08:46:47.038619: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 08:46:47.038838: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-07-13 08:46:47.047323: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 3392550000 Hz
+2021-07-13 08:46:47.047869: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55f1bbfa37c0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-07-13 08:46:47.047887: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-07-13 08:46:47.086186: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 08:46:47.086547: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55f1be1804f0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-07-13 08:46:47.086570: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): GeForce GTX TITAN Black, Compute Capability 3.5
+2021-07-13 08:46:47.086748: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 08:46:47.086983: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce GTX TITAN Black computeCapability: 3.5
+coreClock: 0.98GHz coreCount: 15 deviceMemorySize: 5.94GiB deviceMemoryBandwidth: 312.92GiB/s
+2021-07-13 08:46:47.087015: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-13 08:46:47.087058: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-13 08:46:47.087094: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-07-13 08:46:47.087126: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-07-13 08:46:47.087162: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-07-13 08:46:47.087198: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-07-13 08:46:47.087233: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-07-13 08:46:47.087316: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 08:46:47.087600: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 08:46:47.087818: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-07-13 08:46:47.087848: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-13 08:46:47.520262: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-07-13 08:46:47.520307: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0 
+2021-07-13 08:46:47.520319: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N 
+2021-07-13 08:46:47.520592: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 08:46:47.521035: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 08:46:47.521355: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 108 MB memory) -> physical GPU (device: 0, name: GeForce GTX TITAN Black, pci bus id: 0000:01:00.0, compute capability: 3.5)
+2021-07-13 08:46:47.530065: I tensorflow/stream_executor/cuda/cuda_driver.cc:775] failed to allocate 108.25M (113508352 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+2021-07-13 08:46:47.729498: W tensorflow/core/framework/cpu_allocator_impl.cc:81] Allocation of 119154000 exceeds 10% of free system memory.
+Epoch 1/100
+2021-07-13 08:46:48.572952: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-13 08:46:48.635385: E tensorflow/stream_executor/cuda/cuda_blas.cc:225] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2021-07-13 08:46:48.642652: E tensorflow/stream_executor/cuda/cuda_blas.cc:225] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2021-07-13 08:46:48.650638: E tensorflow/stream_executor/cuda/cuda_blas.cc:225] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2021-07-13 08:46:48.657850: E tensorflow/stream_executor/cuda/cuda_blas.cc:225] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2021-07-13 08:46:48.664257: E tensorflow/stream_executor/cuda/cuda_blas.cc:225] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2021-07-13 08:46:48.671276: E tensorflow/stream_executor/cuda/cuda_blas.cc:225] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2021-07-13 08:46:48.677768: E tensorflow/stream_executor/cuda/cuda_blas.cc:225] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2021-07-13 08:46:48.684448: E tensorflow/stream_executor/cuda/cuda_blas.cc:225] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2021-07-13 08:46:48.690988: E tensorflow/stream_executor/cuda/cuda_blas.cc:225] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2021-07-13 08:46:48.692473: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-07-13 08:46:48.701441: E tensorflow/stream_executor/cuda/cuda_dnn.cc:328] Could not create cudnn handle: CUDNN_STATUS_INTERNAL_ERROR
+2021-07-13 08:46:48.709730: E tensorflow/stream_executor/cuda/cuda_dnn.cc:328] Could not create cudnn handle: CUDNN_STATUS_INTERNAL_ERROR
+Traceback (most recent call last):
+  File "validation.py", line 119, in <module>
+    history = model.fit(data['x_train'], 
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/keras/engine/training.py", line 108, in _method_wrapper
+    return method(self, *args, **kwargs)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/keras/engine/training.py", line 1098, in fit
+    tmp_logs = train_function(iterator)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 780, in __call__
+    result = self._call(*args, **kwds)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 840, in _call
+    return self._stateless_fn(*args, **kwds)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 2829, in __call__
+    return graph_function._filtered_call(args, kwargs)  # pylint: disable=protected-access
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 1843, in _filtered_call
+    return self._call_flat(
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 1923, in _call_flat
+    return self._build_call_outputs(self._inference_function.call(
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 545, in call
+    outputs = execute.execute(
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/eager/execute.py", line 59, in quick_execute
+    tensors = pywrap_tfe.TFE_Py_Execute(ctx._handle, device_name, op_name,
+tensorflow.python.framework.errors_impl.UnknownError:  Failed to get convolution algorithm. This is probably because cuDNN failed to initialize, so try looking to see if a warning log message was printed above.
+	 [[node sequential/conv2d/Conv2D (defined at validation.py:119) ]] [Op:__inference_train_function_1178]
+
+Function call stack:
+train_function
+
+[0m
