@@ -1,0 +1,301 @@
+2021-07-13 11:59:58.291282: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+*********************Current data crop: 100**************************
+Current file:CLASubjectC1511263StLRHand.mat
+(666800, 22)
+(666800, 1)
+Creating RawArray with float64 data, n_channels=23, n_times=666800
+    Range : 0 ... 666799 =      0.000 ...  3333.995 secs
+Ready.
+EEG channel type selected for re-referencing
+Applying average reference.
+Applying a custom EEG reference.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.1 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.10
+- Lower transition bandwidth: 0.10 Hz (-6 dB cutoff frequency: 0.05 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 6601 samples (33.005 sec)
+
+1920 events found
+Event IDs: [0 1 2 3]
+Not setting metadata
+Not setting metadata
+636 matching events found
+No baseline correction applied
+0 projection items activated
+Loading data for 636 events and 201 original time points ...
+0 bad epochs dropped
+Current file:CLASubjectC1512163StLRHand.mat
+(681200, 22)
+(681200, 1)
+Creating RawArray with float64 data, n_channels=23, n_times=681200
+    Range : 0 ... 681199 =      0.000 ...  3405.995 secs
+Ready.
+EEG channel type selected for re-referencing
+Applying average reference.
+Applying a custom EEG reference.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.1 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.10
+- Lower transition bandwidth: 0.10 Hz (-6 dB cutoff frequency: 0.05 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 6601 samples (33.005 sec)
+
+1920 events found
+Event IDs: [0 1 2 3]
+Not setting metadata
+Not setting metadata
+636 matching events found
+No baseline correction applied
+0 projection items activated
+Loading data for 636 events and 201 original time points ...
+0 bad epochs dropped
+Current file:CLASubjectC1512233StLRHand.mat
+(669400, 22)
+(669400, 1)
+Creating RawArray with float64 data, n_channels=23, n_times=669400
+    Range : 0 ... 669399 =      0.000 ...  3346.995 secs
+Ready.
+EEG channel type selected for re-referencing
+Applying average reference.
+Applying a custom EEG reference.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.1 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.10
+- Lower transition bandwidth: 0.10 Hz (-6 dB cutoff frequency: 0.05 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 6601 samples (33.005 sec)
+
+1926 events found
+Event IDs: [ 0  1  2  3 99]
+Not setting metadata
+Not setting metadata
+635 matching events found
+No baseline correction applied
+0 projection items activated
+Loading data for 635 events and 201 original time points ...
+0 bad epochs dropped
+---------------------------------------------------------------------------------
+BEST CONFIGURATION MODEL:
+window_size: 100, step_size: 60,
+kernel_size: 5, pool_size: 3,
+learning_rate: 0.0006421923877743608, temporal_filters: 40
+optimizer: adam, activation: elu,
+batch_normalization: False, n_conv_layers: 0,
+n_fc_layers: 2, n_neurons_2nd_layer: 0.25,
+dropout_rate: 0
+---------------------------------------------------------------------------------
+2021-07-13 12:00:05.128943: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
+2021-07-13 12:00:05.384124: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 12:00:05.384606: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce GTX TITAN Black computeCapability: 3.5
+coreClock: 0.98GHz coreCount: 15 deviceMemorySize: 5.94GiB deviceMemoryBandwidth: 312.92GiB/s
+2021-07-13 12:00:05.384638: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-13 12:00:05.386187: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-13 12:00:05.387258: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-07-13 12:00:05.387525: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-07-13 12:00:05.388844: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-07-13 12:00:05.389555: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-07-13 12:00:05.392352: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-07-13 12:00:05.392564: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 12:00:05.393054: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 12:00:05.393437: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-07-13 12:00:05.399870: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 3392550000 Hz
+2021-07-13 12:00:05.400427: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x56146523cfe0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-07-13 12:00:05.400463: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-07-13 12:00:05.427398: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 12:00:05.427982: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x561463fb3250 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-07-13 12:00:05.428021: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): GeForce GTX TITAN Black, Compute Capability 3.5
+2021-07-13 12:00:05.428281: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 12:00:05.428858: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce GTX TITAN Black computeCapability: 3.5
+coreClock: 0.98GHz coreCount: 15 deviceMemorySize: 5.94GiB deviceMemoryBandwidth: 312.92GiB/s
+2021-07-13 12:00:05.428906: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-13 12:00:05.428957: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-13 12:00:05.429001: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-07-13 12:00:05.429059: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-07-13 12:00:05.429096: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-07-13 12:00:05.429131: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-07-13 12:00:05.429165: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-07-13 12:00:05.429262: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 12:00:05.429725: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 12:00:05.430238: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-07-13 12:00:05.430279: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-13 12:00:05.741932: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-07-13 12:00:05.741974: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0 
+2021-07-13 12:00:05.741992: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N 
+2021-07-13 12:00:05.742296: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 12:00:05.742820: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 12:00:05.743268: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 5581 MB memory) -> physical GPU (device: 0, name: GeForce GTX TITAN Black, pci bus id: 0000:01:00.0, compute capability: 3.5)
+Epoch 1/100
+2021-07-13 12:00:06.400538: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-13 12:00:06.507327: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+64/64 - 1s - loss: 0.3326 - accuracy: 0.8555 - val_loss: 0.2390 - val_accuracy: 0.9136
+Epoch 2/100
+64/64 - 0s - loss: 0.1428 - accuracy: 0.9445 - val_loss: 0.1096 - val_accuracy: 0.9548
+Epoch 3/100
+64/64 - 0s - loss: 0.0603 - accuracy: 0.9774 - val_loss: 0.1684 - val_accuracy: 0.9489
+Epoch 4/100
+64/64 - 0s - loss: 0.0509 - accuracy: 0.9833 - val_loss: 0.1241 - val_accuracy: 0.9607
+Epoch 5/100
+64/64 - 0s - loss: 0.0420 - accuracy: 0.9843 - val_loss: 0.1161 - val_accuracy: 0.9607
+Epoch 6/100
+64/64 - 0s - loss: 0.0375 - accuracy: 0.9857 - val_loss: 0.1452 - val_accuracy: 0.9646
+Epoch 7/100
+64/64 - 0s - loss: 0.0266 - accuracy: 0.9912 - val_loss: 0.1260 - val_accuracy: 0.9587
+Epoch 8/100
+64/64 - 0s - loss: 0.0134 - accuracy: 0.9946 - val_loss: 0.1213 - val_accuracy: 0.9646
+Epoch 9/100
+64/64 - 0s - loss: 0.0049 - accuracy: 0.9990 - val_loss: 0.1090 - val_accuracy: 0.9725
+Epoch 10/100
+64/64 - 0s - loss: 0.0013 - accuracy: 1.0000 - val_loss: 0.1109 - val_accuracy: 0.9705
+Epoch 11/100
+64/64 - 0s - loss: 5.2048e-04 - accuracy: 1.0000 - val_loss: 0.1106 - val_accuracy: 0.9725
+Epoch 12/100
+64/64 - 0s - loss: 3.9005e-04 - accuracy: 1.0000 - val_loss: 0.1137 - val_accuracy: 0.9725
+Epoch 13/100
+64/64 - 0s - loss: 3.1734e-04 - accuracy: 1.0000 - val_loss: 0.1160 - val_accuracy: 0.9725
+Epoch 14/100
+64/64 - 0s - loss: 2.6766e-04 - accuracy: 1.0000 - val_loss: 0.1171 - val_accuracy: 0.9705
+ 1/40 [..............................] - ETA: 0s - loss: 1.0387 - accuracy: 0.750022/40 [===============>..............] - ETA: 0s - loss: 0.6098 - accuracy: 0.872239/40 [============================>.] - ETA: 0s - loss: 0.8169 - accuracy: 0.840540/40 [==============================] - 0s 3ms/step - loss: 0.8154 - accuracy: 0.8386
+Epoch 1/100
+64/64 - 0s - loss: 2.3044e-04 - accuracy: 1.0000 - val_loss: 0.1200 - val_accuracy: 0.9705
+Epoch 2/100
+64/64 - 0s - loss: 1.9945e-04 - accuracy: 1.0000 - val_loss: 0.1219 - val_accuracy: 0.9686
+Epoch 3/100
+64/64 - 0s - loss: 1.7628e-04 - accuracy: 1.0000 - val_loss: 0.1227 - val_accuracy: 0.9686
+Epoch 4/100
+64/64 - 0s - loss: 1.5447e-04 - accuracy: 1.0000 - val_loss: 0.1246 - val_accuracy: 0.9686
+Epoch 5/100
+64/64 - 0s - loss: 1.3841e-04 - accuracy: 1.0000 - val_loss: 0.1259 - val_accuracy: 0.9666
+Epoch 6/100
+64/64 - 0s - loss: 1.2359e-04 - accuracy: 1.0000 - val_loss: 0.1271 - val_accuracy: 0.9686
+ 1/40 [..............................] - ETA: 0s - loss: 1.0987 - accuracy: 0.750021/40 [==============>...............] - ETA: 0s - loss: 0.6674 - accuracy: 0.869037/40 [==========================>...] - ETA: 0s - loss: 0.8965 - accuracy: 0.841240/40 [==============================] - 0s 3ms/step - loss: 0.8767 - accuracy: 0.8417
+Epoch 1/100
+64/64 - 0s - loss: 1.1137e-04 - accuracy: 1.0000 - val_loss: 0.1284 - val_accuracy: 0.9686
+Epoch 2/100
+64/64 - 0s - loss: 1.0131e-04 - accuracy: 1.0000 - val_loss: 0.1295 - val_accuracy: 0.9666
+Epoch 3/100
+64/64 - 0s - loss: 9.2241e-05 - accuracy: 1.0000 - val_loss: 0.1311 - val_accuracy: 0.9686
+Epoch 4/100
+64/64 - 0s - loss: 8.3749e-05 - accuracy: 1.0000 - val_loss: 0.1320 - val_accuracy: 0.9666
+Epoch 5/100
+64/64 - 0s - loss: 7.6945e-05 - accuracy: 1.0000 - val_loss: 0.1325 - val_accuracy: 0.9666
+Epoch 6/100
+64/64 - 0s - loss: 7.0437e-05 - accuracy: 1.0000 - val_loss: 0.1343 - val_accuracy: 0.9666
+ 1/40 [..............................] - ETA: 0s - loss: 1.1495 - accuracy: 0.750020/40 [==============>...............] - ETA: 0s - loss: 0.7296 - accuracy: 0.865638/40 [===========================>..] - ETA: 0s - loss: 0.9432 - accuracy: 0.840540/40 [==============================] - 0s 3ms/step - loss: 0.9270 - accuracy: 0.8402
+Epoch 1/100
+64/64 - 0s - loss: 6.4984e-05 - accuracy: 1.0000 - val_loss: 0.1353 - val_accuracy: 0.9686
+Epoch 2/100
+64/64 - 0s - loss: 6.0072e-05 - accuracy: 1.0000 - val_loss: 0.1361 - val_accuracy: 0.9686
+Epoch 3/100
+64/64 - 0s - loss: 5.5572e-05 - accuracy: 1.0000 - val_loss: 0.1375 - val_accuracy: 0.9686
+Epoch 4/100
+64/64 - 0s - loss: 5.1485e-05 - accuracy: 1.0000 - val_loss: 0.1379 - val_accuracy: 0.9686
+Epoch 5/100
+64/64 - 0s - loss: 4.8021e-05 - accuracy: 1.0000 - val_loss: 0.1389 - val_accuracy: 0.9686
+Epoch 6/100
+64/64 - 0s - loss: 4.4601e-05 - accuracy: 1.0000 - val_loss: 0.1398 - val_accuracy: 0.9686
+ 1/40 [..............................] - ETA: 0s - loss: 1.1906 - accuracy: 0.750020/40 [==============>...............] - ETA: 0s - loss: 0.7602 - accuracy: 0.865636/40 [==========================>...] - ETA: 0s - loss: 0.9986 - accuracy: 0.837740/40 [==============================] - 0s 3ms/step - loss: 0.9662 - accuracy: 0.8402
+Epoch 1/100
+64/64 - 0s - loss: 4.1514e-05 - accuracy: 1.0000 - val_loss: 0.1411 - val_accuracy: 0.9686
+Epoch 2/100
+64/64 - 0s - loss: 3.8961e-05 - accuracy: 1.0000 - val_loss: 0.1420 - val_accuracy: 0.9686
+Epoch 3/100
+64/64 - 0s - loss: 3.6373e-05 - accuracy: 1.0000 - val_loss: 0.1428 - val_accuracy: 0.9686
+Epoch 4/100
+64/64 - 0s - loss: 3.4043e-05 - accuracy: 1.0000 - val_loss: 0.1438 - val_accuracy: 0.9686
+Epoch 5/100
+64/64 - 0s - loss: 3.1934e-05 - accuracy: 1.0000 - val_loss: 0.1443 - val_accuracy: 0.9686
+Epoch 6/100
+64/64 - 0s - loss: 2.9968e-05 - accuracy: 1.0000 - val_loss: 0.1447 - val_accuracy: 0.9686
+ 1/40 [..............................] - ETA: 0s - loss: 1.2287 - accuracy: 0.781220/40 [==============>...............] - ETA: 0s - loss: 0.7890 - accuracy: 0.867236/40 [==========================>...] - ETA: 0s - loss: 1.0360 - accuracy: 0.837740/40 [==============================] - 0s 3ms/step - loss: 1.0024 - accuracy: 0.8402
+Epoch 1/100
+64/64 - 0s - loss: 2.8238e-05 - accuracy: 1.0000 - val_loss: 0.1454 - val_accuracy: 0.9686
+Epoch 2/100
+64/64 - 0s - loss: 2.6528e-05 - accuracy: 1.0000 - val_loss: 0.1463 - val_accuracy: 0.9686
+Epoch 3/100
+64/64 - 0s - loss: 2.4978e-05 - accuracy: 1.0000 - val_loss: 0.1475 - val_accuracy: 0.9686
+Epoch 4/100
+64/64 - 0s - loss: 2.3622e-05 - accuracy: 1.0000 - val_loss: 0.1482 - val_accuracy: 0.9686
+Epoch 5/100
+64/64 - 0s - loss: 2.2208e-05 - accuracy: 1.0000 - val_loss: 0.1490 - val_accuracy: 0.9686
+Epoch 6/100
+64/64 - 0s - loss: 2.0981e-05 - accuracy: 1.0000 - val_loss: 0.1498 - val_accuracy: 0.9686
+ 1/40 [..............................] - ETA: 0s - loss: 1.2645 - accuracy: 0.781220/40 [==============>...............] - ETA: 0s - loss: 0.8150 - accuracy: 0.868736/40 [==========================>...] - ETA: 0s - loss: 1.0699 - accuracy: 0.837740/40 [==============================] - 0s 3ms/step - loss: 1.0354 - accuracy: 0.8402
+Epoch 1/100
+64/64 - 0s - loss: 1.9868e-05 - accuracy: 1.0000 - val_loss: 0.1498 - val_accuracy: 0.9686
+Epoch 2/100
+64/64 - 0s - loss: 1.8795e-05 - accuracy: 1.0000 - val_loss: 0.1507 - val_accuracy: 0.9686
+Epoch 3/100
+64/64 - 0s - loss: 1.7787e-05 - accuracy: 1.0000 - val_loss: 0.1517 - val_accuracy: 0.9686
+Epoch 4/100
+64/64 - 0s - loss: 1.6851e-05 - accuracy: 1.0000 - val_loss: 0.1524 - val_accuracy: 0.9686
+Epoch 5/100
+64/64 - 0s - loss: 1.5979e-05 - accuracy: 1.0000 - val_loss: 0.1531 - val_accuracy: 0.9686
+Epoch 6/100
+64/64 - 0s - loss: 1.5150e-05 - accuracy: 1.0000 - val_loss: 0.1541 - val_accuracy: 0.9686
+ 1/40 [..............................] - ETA: 0s - loss: 1.2995 - accuracy: 0.781221/40 [==============>...............] - ETA: 0s - loss: 0.8122 - accuracy: 0.867639/40 [============================>.] - ETA: 0s - loss: 1.0698 - accuracy: 0.840540/40 [==============================] - 0s 3ms/step - loss: 1.0666 - accuracy: 0.8394
+Epoch 1/100
+64/64 - 0s - loss: 1.4362e-05 - accuracy: 1.0000 - val_loss: 0.1545 - val_accuracy: 0.9686
+Epoch 2/100
+64/64 - 0s - loss: 1.3645e-05 - accuracy: 1.0000 - val_loss: 0.1554 - val_accuracy: 0.9686
+Epoch 3/100
+64/64 - 0s - loss: 1.2973e-05 - accuracy: 1.0000 - val_loss: 0.1558 - val_accuracy: 0.9686
+Epoch 4/100
+64/64 - 0s - loss: 1.2321e-05 - accuracy: 1.0000 - val_loss: 0.1567 - val_accuracy: 0.9686
+Epoch 5/100
+64/64 - 0s - loss: 1.1756e-05 - accuracy: 1.0000 - val_loss: 0.1571 - val_accuracy: 0.9686
+Epoch 6/100
+64/64 - 0s - loss: 1.1173e-05 - accuracy: 1.0000 - val_loss: 0.1577 - val_accuracy: 0.9686
+ 1/40 [..............................] - ETA: 0s - loss: 1.3291 - accuracy: 0.781220/40 [==============>...............] - ETA: 0s - loss: 0.8613 - accuracy: 0.867237/40 [==========================>...] - ETA: 0s - loss: 1.1176 - accuracy: 0.838740/40 [==============================] - 0s 3ms/step - loss: 1.0936 - accuracy: 0.8394
+Epoch 1/100
+64/64 - 0s - loss: 1.0635e-05 - accuracy: 1.0000 - val_loss: 0.1585 - val_accuracy: 0.9686
+Epoch 2/100
+64/64 - 0s - loss: 1.0128e-05 - accuracy: 1.0000 - val_loss: 0.1592 - val_accuracy: 0.9686
+Epoch 3/100
+64/64 - 0s - loss: 9.6442e-06 - accuracy: 1.0000 - val_loss: 0.1598 - val_accuracy: 0.9686
+Epoch 4/100
+64/64 - 0s - loss: 9.1809e-06 - accuracy: 1.0000 - val_loss: 0.1604 - val_accuracy: 0.9686
+Epoch 5/100
+64/64 - 0s - loss: 8.7690e-06 - accuracy: 1.0000 - val_loss: 0.1609 - val_accuracy: 0.9686
+Epoch 6/100
+64/64 - 0s - loss: 8.3530e-06 - accuracy: 1.0000 - val_loss: 0.1617 - val_accuracy: 0.9686
+ 1/40 [..............................] - ETA: 0s - loss: 1.3609 - accuracy: 0.781220/40 [==============>...............] - ETA: 0s - loss: 0.8834 - accuracy: 0.867236/40 [==========================>...] - ETA: 0s - loss: 1.1585 - accuracy: 0.835940/40 [==============================] - 0s 3ms/step - loss: 1.1215 - accuracy: 0.8386
+Epoch 1/100
+64/64 - 0s - loss: 7.9635e-06 - accuracy: 1.0000 - val_loss: 0.1621 - val_accuracy: 0.9686
+Epoch 2/100
+64/64 - 0s - loss: 7.6102e-06 - accuracy: 1.0000 - val_loss: 0.1626 - val_accuracy: 0.9686
+Epoch 3/100
+64/64 - 0s - loss: 7.2635e-06 - accuracy: 1.0000 - val_loss: 0.1634 - val_accuracy: 0.9686
+Epoch 4/100
+64/64 - 0s - loss: 6.9337e-06 - accuracy: 1.0000 - val_loss: 0.1636 - val_accuracy: 0.9686
+Epoch 5/100
+64/64 - 0s - loss: 6.6385e-06 - accuracy: 1.0000 - val_loss: 0.1646 - val_accuracy: 0.9686
+Epoch 6/100
+64/64 - 0s - loss: 6.3301e-06 - accuracy: 1.0000 - val_loss: 0.1652 - val_accuracy: 0.9686
+ 1/40 [..............................] - ETA: 0s - loss: 1.3914 - accuracy: 0.781218/40 [============>.................] - ETA: 0s - loss: 0.7648 - accuracy: 0.880234/40 [========================>.....] - ETA: 0s - loss: 1.1529 - accuracy: 0.841040/40 [==============================] - 0s 3ms/step - loss: 1.1476 - accuracy: 0.8386
+old_val_acc_std: 0.0009448776643917586, new_val_acc_std: 0.0016961148998848746
+old_val_acc_mean: 0.8396850526332855, new_val_acc_mean: 0.8648818897637793
+[0m
