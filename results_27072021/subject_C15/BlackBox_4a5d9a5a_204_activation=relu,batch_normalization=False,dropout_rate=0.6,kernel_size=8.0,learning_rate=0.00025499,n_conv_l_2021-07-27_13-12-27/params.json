@@ -1,0 +1,15 @@
+{
+  "activation": "relu",
+  "batch_normalization": false,
+  "dropout_rate": 0.6,
+  "kernel_size": 8.0,
+  "learning_rate": 0.0002549915304914406,
+  "n_conv_layers": 1.0,
+  "n_fc_layers": 2.0,
+  "n_neurons_2nd_layer": 0.4,
+  "optimizer": "sgd",
+  "pool_size": 3.0,
+  "step_size": 0.6000000000000001,
+  "temporal_filters": 40.0,
+  "window_size": 50.0
+}
