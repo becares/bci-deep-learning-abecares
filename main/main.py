@@ -49,41 +49,45 @@ def create_epochs(filename, drop_half=False):
     
 def load_epochs(subject, size):
     
-    	if subject == 'B':
-        	filenames = ('CLASubjectB1510193StLRHand.mat',
-                    		 'CLASubjectB1510203StLRHand.mat',
-                    			 'CLASubjectB1512153StLRHand.mat')
-    	if subject == 'C':
-        	filenames = ('CLASubjectC1511263StLRHand.mat',
-                    		 'CLASubjectC1512163StLRHand.mat',
-                    			 'CLASubjectC1512233StLRHand.mat')
-    	if subject == 'E':
-        	filenames = ('CLASubjectE1512253StLRHand.mat',
-                    		 'CLASubjectE1601193StLRHand.mat',
-                     			'CLASubjectE1601193StLRHand.mat')
-   	if subject == 'F':
-		filenames = ('CLASubjectF1509163StLRHand.mat','CLASubjectF1509173StLRHand.mat','CLASubjectF1509283StLRHand.mat')
+    if subject == 'B':
+        filenames = ('CLASubjectB1510193StLRHand.mat',
+                     'CLASubjectB1510203StLRHand.mat',
+                     'CLASubjectB1512153StLRHand.mat')
+    if subject == 'C':
+        filenames = ('CLASubjectC1511263StLRHand.mat',
+                     'CLASubjectC1512163StLRHand.mat',
+                     'CLASubjectC1512233StLRHand.mat')
+    if subject == 'E':
+        filenames = ('CLASubjectE1512253StLRHand.mat',
+                     'CLASubjectE1601193StLRHand.mat',
+                     'CLASubjectE1601193StLRHand.mat')
+    if subject == 'F':
+        filenames = ('CLASubjectF1509163StLRHand.mat',
+                     'CLASubjectF1509173StLRHand.mat',
+                     'CLASubjectF1509283StLRHand.mat')
 
-	# 1 epoch per file
-	epochs_list = []
-	if size==15:
-		print('*********************Current data crop: 15**************************')
-		epochs1 = create_epochs(filenames[0], drop_half=15)
-		epochs3 = create_epochs(filenames[2], drop_half=False)
-		epochs_list.append(epochs1)
-		epochs_list.append(epochs3)
-	if size==10:
-		print('*********************Current data crop: 10**************************')
-		epochs1 = create_epochs(filenames[0], drop_half=10)
-		epochs3 = create_epochs(filenames[2], drop_half=False)
-		epochs_list.append(epochs1)
-		epochs_list.append(epochs3)
-	if size==5:
-		print('*********************Current data crop: 5**************************')
-		epochs1 = create_epochs(filenames[0], drop_half=5)
-		epochs3 = create_epochs(filenames[2], drop_half=False)
-		epochs_list.append(epochs1)
-		epochs_list.append(epochs3)
+    # 1 epoch per file
+    epochs_list = []
+    if size==15:
+        print('*********************Current data crop: 15**************************')
+        epochs1 = create_epochs(filenames[0], drop_half=15)
+        epochs3 = create_epochs(filenames[2], drop_half=False)
+        epochs_list.append(epochs1)
+        epochs_list.append(epochs3)
+    if size==10:
+        print('*********************Current data crop: 10**************************')
+        epochs1 = create_epochs(filenames[0], drop_half=10)
+        epochs3 = create_epochs(filenames[2], drop_half=False)
+        epochs_list.append(epochs1)
+        epochs_list.append(epochs3)
+    if size==5:
+        print('*********************Current data crop: 5**************************')
+        epochs1 = create_epochs(filenames[0], drop_half=5)
+        epochs3 = create_epochs(filenames[2], drop_half=False)
+        epochs_list.append(epochs1)
+        epochs_list.append(epochs3)
+    
+    return epochs_list
 
 # Generate the data given the epoch list and some parameters
 def generate_data(epochs_list, window_size, step_size):
