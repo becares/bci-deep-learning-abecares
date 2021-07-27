@@ -29,8 +29,9 @@ def load_data(filename, drop_half=False):
     data = ml_data['data'] * 10e-6  # From uV to V.
     print(np.shape(data))
     print(np.shape(markers))
-    if drop_half:
-        size = int(len(data)/2)
+    if drop_half != False:
+        drop_size = drop_half / 100
+        size = int(len(data)*drop_size)
         data = data[:size]
         markers = markers[:size]
         print(np.shape(data))
