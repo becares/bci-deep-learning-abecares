@@ -1,34 +1,10 @@
-# Proyecto BCI-Deep Learning Adrián Bécares
+# BCI system for motor imagery classification using convolutional neural networks
 
-El objetivo principal del proyecto es diseñar una red profunda para la clasificación de señales EEG.
+The  following  project  aims  to  analyze  the  ability  of  Convolutional  Neural  Networks(CNNs) to discriminate raw Electroencephalographic (EEG) signals for Brain-computer interfaces (BCI), in order to develop a solid and reliable model that is capable of solving these medical and clinical applications. The project also aims to serve as foundations forfuture research projects of the UPV/EHU research group Aldapa, as well as being a starting framework to apply modern techniques such as Transfer Learning or Semi-supervised Learning. 
 
-Características:
-* La base de datos con señales EEG utilizada en la experimentación será la descrita en Kaya et al. (2018) salvo que un análisis previo descubra una base de datos más adecuada. Los requerimientos buscados son:
-  * Gran número de trials registrados por sujeto.
-  * Gran cantidad de señales relacionadas con reposo y/o señales sin etiquetar.
-    * Pocas clases a discernir.
-    * No es necesario disponer de una gran cantidad de sujetos.
-* La base datos mencionada tiene distintos apartados con distintas formas de adquirir las señales EEG. Se deberá decidir los apartados a utilizar y se repetirá la experimentación con varios sujetos.
-* La arquitectura de la red profunda se basará en la red profunda propuesta en Schirrmeister et al. (2017) salvo que un análisis previo descubra una arquitectura más adecuada. Los requerimientos buscados son:
-  * Una red descrita en un artículo actual, riguroso y bien explicado.
-  * Una red de complejidad media, evitando características muy poco usadas en el contexto.
-  * Una red cuya implementación esté disponible (preferiblemente en Python).
-* El experimento deberá realizarse sobre muestras de entrenamiento de diferente tamaño para evaluar cómo afecta esta característica al resultado obtenido. Deberá diseñarse un procedimiento que utilice submuestras de la base de datos completa. En relación a esto deberá decidirse el método de validación a utilizar (probablemente validación cruzada).
-* Se definirá un procedimiento sencillo de early-stopping para finalizar el proceso de entrenamiento de la red.
-* Se utilizará un algoritmo de optimización bayesiana para establecer los parámetros más adecuados en cada caso. Los parámetros a optimizar serán los siguientes (se mencionan los rangos aproximados en los que se probarán los parámetros):
-  * Tasa de aprendizaje: [10-2, 10-5] escala logarítmica
-  * Tamaño del kernel {3, 5, 7, 9} y max pooling {2, 3}
-  * Tamaño de ventana (puntos) [50, 150] y desplazamiento (%) [10, 100].
-  * Algoritmo de aprendizaje: {SGD, Adam}
-  * Batch normalization: {Sí, No}
-  * Función de activación: {ReLU, ELU}
-  * Número de capas convolucionales: {2, 3, 4}
-  * Número de filtros de la primera capa (multiplicar por el pooling a partir de ahí): [10, 50]
-  * Dropout: [0, 0,6]
-  * Número de capas FC: {0, 1, 2}
-  * Número de neuronas en la segunda capa (porcentaje de la anterior): [20, 75]
+To achieve this, this report collects and explains the mathematical and theoretical foundations of the architectures and models used for the development, based on the article of Schirrmeister et al. (2017) and the large EEG database provided by Kaya et al. (2018). Following the model implementation, an experimentation is designed and tested, among with  an  Hyperparameter  Optimization  setup  for  the  developed  model.  Finally,  the  results show that the performance of the model depends on the subject and EEG recording session. It also shows that some hyperparameters influence the model, for example the optimization algorithm, but other hyperparameters barely affect the performance of the implementation.
 
-Referencias:
+References:
 
 Kaya, M. et al. (2018) A large electroencephalographic motor imagery dataset for electroencephalographic brain computer interfaces. Sci Data 5, 180211. https://doi.org/10.1038/sdata.2018.211
 
