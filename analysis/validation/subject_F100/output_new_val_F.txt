@@ -1,0 +1,349 @@
+2021-07-13 09:13:52.927161: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+*********************Current data crop: 100**************************
+Current file:CLASubjectF1509163StLRHand.mat
+(689600, 22)
+(689600, 1)
+Creating RawArray with float64 data, n_channels=23, n_times=689600
+    Range : 0 ... 689599 =      0.000 ...  3447.995 secs
+Ready.
+EEG channel type selected for re-referencing
+Applying average reference.
+Applying a custom EEG reference.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.1 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.10
+- Lower transition bandwidth: 0.10 Hz (-6 dB cutoff frequency: 0.05 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 6601 samples (33.005 sec)
+
+1936 events found
+Event IDs: [ 0  1  2 90 91 92 99]
+Not setting metadata
+Not setting metadata
+960 matching events found
+No baseline correction applied
+0 projection items activated
+Loading data for 960 events and 201 original time points ...
+0 bad epochs dropped
+Current file:CLASubjectF1509173StLRHand.mat
+(664600, 22)
+(664600, 1)
+Creating RawArray with float64 data, n_channels=23, n_times=664600
+    Range : 0 ... 664599 =      0.000 ...  3322.995 secs
+Ready.
+EEG channel type selected for re-referencing
+Applying average reference.
+Applying a custom EEG reference.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.1 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.10
+- Lower transition bandwidth: 0.10 Hz (-6 dB cutoff frequency: 0.05 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 6601 samples (33.005 sec)
+
+1932 events found
+Event IDs: [ 0  1  2  3 91 92 99]
+Not setting metadata
+Not setting metadata
+652 matching events found
+No baseline correction applied
+0 projection items activated
+Loading data for 652 events and 201 original time points ...
+0 bad epochs dropped
+Current file:CLASubjectF1509283StLRHand.mat
+(666800, 22)
+(666800, 1)
+Creating RawArray with float64 data, n_channels=23, n_times=666800
+    Range : 0 ... 666799 =      0.000 ...  3333.995 secs
+Ready.
+EEG channel type selected for re-referencing
+Applying average reference.
+Applying a custom EEG reference.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.1 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.10
+- Lower transition bandwidth: 0.10 Hz (-6 dB cutoff frequency: 0.05 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 6601 samples (33.005 sec)
+
+1932 events found
+Event IDs: [ 0  1  2  3 91 92 99]
+Not setting metadata
+Not setting metadata
+640 matching events found
+No baseline correction applied
+0 projection items activated
+Loading data for 640 events and 201 original time points ...
+0 bad epochs dropped
+---------------------------------------------------------------------------------
+BEST CONFIGURATION MODEL:
+window_size: 100, step_size: 10,
+kernel_size: 9, pool_size: 3,
+learning_rate: 0.0003200077962021841, temporal_filters: 50
+optimizer: adam, activation: relu,
+batch_normalization: False, n_conv_layers: 1,
+n_fc_layers: 2, n_neurons_2nd_layer: 0.7000000000000001,
+dropout_rate: 0.6
+---------------------------------------------------------------------------------
+2021-07-13 09:14:00.608798: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
+2021-07-13 09:14:00.863242: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 09:14:00.863735: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce GTX TITAN Black computeCapability: 3.5
+coreClock: 0.98GHz coreCount: 15 deviceMemorySize: 5.94GiB deviceMemoryBandwidth: 312.92GiB/s
+2021-07-13 09:14:00.863759: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-13 09:14:00.865342: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-13 09:14:00.866442: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-07-13 09:14:00.866717: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-07-13 09:14:00.868057: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-07-13 09:14:00.868764: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-07-13 09:14:00.871567: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-07-13 09:14:00.871753: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 09:14:00.872265: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 09:14:00.872656: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-07-13 09:14:00.878642: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 3392550000 Hz
+2021-07-13 09:14:00.879142: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x56142a7bbd70 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-07-13 09:14:00.879177: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-07-13 09:14:00.908050: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 09:14:00.908556: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x561429532250 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2021-07-13 09:14:00.908573: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): GeForce GTX TITAN Black, Compute Capability 3.5
+2021-07-13 09:14:00.908755: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 09:14:00.909350: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1716] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce GTX TITAN Black computeCapability: 3.5
+coreClock: 0.98GHz coreCount: 15 deviceMemorySize: 5.94GiB deviceMemoryBandwidth: 312.92GiB/s
+2021-07-13 09:14:00.909402: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-13 09:14:00.909457: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-13 09:14:00.909514: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcufft.so.10
+2021-07-13 09:14:00.909568: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcurand.so.10
+2021-07-13 09:14:00.909603: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusolver.so.10
+2021-07-13 09:14:00.909638: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcusparse.so.10
+2021-07-13 09:14:00.909677: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+2021-07-13 09:14:00.909766: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 09:14:00.910204: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 09:14:00.910582: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1858] Adding visible gpu devices: 0
+2021-07-13 09:14:00.910614: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2021-07-13 09:14:01.223613: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1257] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-07-13 09:14:01.223657: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1263]      0 
+2021-07-13 09:14:01.223675: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1276] 0:   N 
+2021-07-13 09:14:01.224018: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 09:14:01.224575: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:982] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-07-13 09:14:01.225000: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1402] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 5581 MB memory) -> physical GPU (device: 0, name: GeForce GTX TITAN Black, pci bus id: 0000:01:00.0, compute capability: 3.5)
+Epoch 1/100
+2021-07-13 09:14:02.043480: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcublas.so.10
+2021-07-13 09:14:02.153302: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudnn.so.7
+444/444 - 3s - loss: 0.6863 - accuracy: 0.5416 - val_loss: 0.6477 - val_accuracy: 0.6352
+Epoch 2/100
+444/444 - 3s - loss: 0.5745 - accuracy: 0.6910 - val_loss: 0.4569 - val_accuracy: 0.7809
+Epoch 3/100
+444/444 - 3s - loss: 0.4031 - accuracy: 0.8082 - val_loss: 0.3198 - val_accuracy: 0.8545
+Epoch 4/100
+444/444 - 3s - loss: 0.2861 - accuracy: 0.8723 - val_loss: 0.2371 - val_accuracy: 0.8971
+Epoch 5/100
+444/444 - 3s - loss: 0.2030 - accuracy: 0.9150 - val_loss: 0.2162 - val_accuracy: 0.9072
+Epoch 6/100
+444/444 - 3s - loss: 0.1417 - accuracy: 0.9435 - val_loss: 0.2031 - val_accuracy: 0.9126
+Epoch 7/100
+444/444 - 3s - loss: 0.1080 - accuracy: 0.9593 - val_loss: 0.1732 - val_accuracy: 0.9343
+Epoch 8/100
+444/444 - 3s - loss: 0.0768 - accuracy: 0.9722 - val_loss: 0.1786 - val_accuracy: 0.9323
+Epoch 9/100
+444/444 - 3s - loss: 0.0592 - accuracy: 0.9791 - val_loss: 0.2227 - val_accuracy: 0.9318
+Epoch 10/100
+444/444 - 3s - loss: 0.0496 - accuracy: 0.9820 - val_loss: 0.1702 - val_accuracy: 0.9436
+Epoch 11/100
+444/444 - 3s - loss: 0.0458 - accuracy: 0.9829 - val_loss: 0.2151 - val_accuracy: 0.9363
+Epoch 12/100
+444/444 - 3s - loss: 0.0448 - accuracy: 0.9852 - val_loss: 0.1650 - val_accuracy: 0.9433
+Epoch 13/100
+444/444 - 3s - loss: 0.0289 - accuracy: 0.9898 - val_loss: 0.1632 - val_accuracy: 0.9445
+Epoch 14/100
+444/444 - 3s - loss: 0.0270 - accuracy: 0.9918 - val_loss: 0.1862 - val_accuracy: 0.9456
+Epoch 15/100
+444/444 - 3s - loss: 0.0247 - accuracy: 0.9922 - val_loss: 0.1803 - val_accuracy: 0.9490
+Epoch 16/100
+444/444 - 3s - loss: 0.0393 - accuracy: 0.9867 - val_loss: 0.1774 - val_accuracy: 0.9439
+Epoch 17/100
+444/444 - 3s - loss: 0.0197 - accuracy: 0.9921 - val_loss: 0.1908 - val_accuracy: 0.9431
+Epoch 18/100
+444/444 - 3s - loss: 0.0228 - accuracy: 0.9924 - val_loss: 0.1725 - val_accuracy: 0.9487
+Epoch 19/100
+444/444 - 3s - loss: 0.0135 - accuracy: 0.9953 - val_loss: 0.2181 - val_accuracy: 0.9453
+Epoch 20/100
+444/444 - 3s - loss: 0.0342 - accuracy: 0.9886 - val_loss: 0.2101 - val_accuracy: 0.9450
+Epoch 21/100
+444/444 - 3s - loss: 0.0137 - accuracy: 0.9954 - val_loss: 0.2991 - val_accuracy: 0.9332
+Epoch 22/100
+444/444 - 3s - loss: 0.0230 - accuracy: 0.9927 - val_loss: 0.1727 - val_accuracy: 0.9524
+Epoch 23/100
+444/444 - 3s - loss: 0.0209 - accuracy: 0.9937 - val_loss: 0.2199 - val_accuracy: 0.9383
+Epoch 24/100
+444/444 - 3s - loss: 0.0220 - accuracy: 0.9922 - val_loss: 0.1607 - val_accuracy: 0.9504
+  1/220 [..............................] - ETA: 0s - loss: 8.4576 - accuracy: 0.3125 20/220 [=>............................] - ETA: 0s - loss: 2.6379 - accuracy: 0.5531 36/220 [===>..........................] - ETA: 0s - loss: 2.5666 - accuracy: 0.5920 52/220 [======>.......................] - ETA: 0s - loss: 2.6959 - accuracy: 0.5811 69/220 [========>.....................] - ETA: 0s - loss: 2.4879 - accuracy: 0.5919 85/220 [==========>...................] - ETA: 0s - loss: 2.3130 - accuracy: 0.6015101/220 [============>.................] - ETA: 0s - loss: 2.1974 - accuracy: 0.6067117/220 [==============>...............] - ETA: 0s - loss: 2.2713 - accuracy: 0.6068133/220 [=================>............] - ETA: 0s - loss: 2.1834 - accuracy: 0.6074149/220 [===================>..........] - ETA: 0s - loss: 2.1511 - accuracy: 0.6030165/220 [=====================>........] - ETA: 0s - loss: 2.1336 - accuracy: 0.6000180/220 [=======================>......] - ETA: 0s - loss: 2.1023 - accuracy: 0.6023195/220 [=========================>....] - ETA: 0s - loss: 2.0804 - accuracy: 0.6032212/220 [===========================>..] - ETA: 0s - loss: 2.1381 - accuracy: 0.5991220/220 [==============================] - 1s 3ms/step - loss: 2.1651 - accuracy: 0.5947
+Epoch 1/100
+444/444 - 3s - loss: 0.0142 - accuracy: 0.9951 - val_loss: 0.2153 - val_accuracy: 0.9478
+Epoch 2/100
+444/444 - 3s - loss: 0.0173 - accuracy: 0.9942 - val_loss: 0.1572 - val_accuracy: 0.9557
+Epoch 3/100
+444/444 - 3s - loss: 0.0195 - accuracy: 0.9934 - val_loss: 0.1603 - val_accuracy: 0.9563
+Epoch 4/100
+444/444 - 3s - loss: 0.0139 - accuracy: 0.9954 - val_loss: 0.1950 - val_accuracy: 0.9498
+Epoch 5/100
+444/444 - 3s - loss: 0.0230 - accuracy: 0.9918 - val_loss: 0.1475 - val_accuracy: 0.9583
+Epoch 6/100
+444/444 - 3s - loss: 0.0168 - accuracy: 0.9946 - val_loss: 0.1627 - val_accuracy: 0.9512
+  1/220 [..............................] - ETA: 0s - loss: 6.9531 - accuracy: 0.4062 20/220 [=>............................] - ETA: 0s - loss: 2.5137 - accuracy: 0.5766 36/220 [===>..........................] - ETA: 0s - loss: 2.6903 - accuracy: 0.5911 53/220 [======>.......................] - ETA: 0s - loss: 2.6089 - accuracy: 0.5867 69/220 [========>.....................] - ETA: 0s - loss: 2.5266 - accuracy: 0.5806 87/220 [==========>...................] - ETA: 0s - loss: 2.3344 - accuracy: 0.5916104/220 [=============>................] - ETA: 0s - loss: 2.2703 - accuracy: 0.5974121/220 [===============>..............] - ETA: 0s - loss: 2.3170 - accuracy: 0.5930138/220 [=================>............] - ETA: 0s - loss: 2.2050 - accuracy: 0.5974154/220 [====================>.........] - ETA: 0s - loss: 2.1802 - accuracy: 0.5885171/220 [======================>.......] - ETA: 0s - loss: 2.1554 - accuracy: 0.5925189/220 [========================>.....] - ETA: 0s - loss: 2.0912 - accuracy: 0.5956206/220 [===========================>..] - ETA: 0s - loss: 2.1414 - accuracy: 0.5900220/220 [==============================] - 1s 3ms/step - loss: 2.1523 - accuracy: 0.5862
+Epoch 1/100
+444/444 - 3s - loss: 0.0136 - accuracy: 0.9954 - val_loss: 0.1540 - val_accuracy: 0.9574
+Epoch 2/100
+444/444 - 3s - loss: 0.0110 - accuracy: 0.9963 - val_loss: 0.2143 - val_accuracy: 0.9476
+Epoch 3/100
+444/444 - 3s - loss: 0.0190 - accuracy: 0.9941 - val_loss: 0.1772 - val_accuracy: 0.9504
+Epoch 4/100
+444/444 - 3s - loss: 0.0096 - accuracy: 0.9969 - val_loss: 0.2089 - val_accuracy: 0.9484
+Epoch 5/100
+444/444 - 3s - loss: 0.0200 - accuracy: 0.9940 - val_loss: 0.1490 - val_accuracy: 0.9569
+Epoch 6/100
+444/444 - 3s - loss: 0.0090 - accuracy: 0.9971 - val_loss: 0.1590 - val_accuracy: 0.9619
+Epoch 7/100
+444/444 - 3s - loss: 0.0068 - accuracy: 0.9980 - val_loss: 0.2132 - val_accuracy: 0.9557
+Epoch 8/100
+444/444 - 3s - loss: 0.0266 - accuracy: 0.9902 - val_loss: 0.1461 - val_accuracy: 0.9633
+Epoch 9/100
+444/444 - 3s - loss: 0.0110 - accuracy: 0.9968 - val_loss: 0.1419 - val_accuracy: 0.9642
+Epoch 10/100
+444/444 - 3s - loss: 0.0159 - accuracy: 0.9951 - val_loss: 0.1319 - val_accuracy: 0.9605
+Epoch 11/100
+444/444 - 3s - loss: 0.0112 - accuracy: 0.9963 - val_loss: 0.1719 - val_accuracy: 0.9594
+Epoch 12/100
+444/444 - 3s - loss: 0.0069 - accuracy: 0.9983 - val_loss: 0.1819 - val_accuracy: 0.9569
+  1/220 [..............................] - ETA: 0s - loss: 8.1454 - accuracy: 0.3750 19/220 [=>............................] - ETA: 0s - loss: 3.4871 - accuracy: 0.5691 36/220 [===>..........................] - ETA: 0s - loss: 3.6108 - accuracy: 0.6016 55/220 [======>.......................] - ETA: 0s - loss: 3.5807 - accuracy: 0.5841 72/220 [========>.....................] - ETA: 0s - loss: 3.3132 - accuracy: 0.5877 90/220 [===========>..................] - ETA: 0s - loss: 3.2039 - accuracy: 0.5889107/220 [=============>................] - ETA: 0s - loss: 2.9980 - accuracy: 0.6072124/220 [===============>..............] - ETA: 0s - loss: 3.0305 - accuracy: 0.6021141/220 [==================>...........] - ETA: 0s - loss: 2.9223 - accuracy: 0.6015158/220 [====================>.........] - ETA: 0s - loss: 2.8551 - accuracy: 0.5959175/220 [======================>.......] - ETA: 0s - loss: 2.8097 - accuracy: 0.5982193/220 [=========================>....] - ETA: 0s - loss: 2.7848 - accuracy: 0.5991212/220 [===========================>..] - ETA: 0s - loss: 2.8479 - accuracy: 0.5966220/220 [==============================] - 1s 3ms/step - loss: 2.9000 - accuracy: 0.5928
+Epoch 1/100
+444/444 - 3s - loss: 0.0134 - accuracy: 0.9958 - val_loss: 0.1825 - val_accuracy: 0.9518
+Epoch 2/100
+444/444 - 3s - loss: 0.0128 - accuracy: 0.9961 - val_loss: 0.1763 - val_accuracy: 0.9549
+Epoch 3/100
+444/444 - 3s - loss: 0.0087 - accuracy: 0.9976 - val_loss: 0.1379 - val_accuracy: 0.9690
+Epoch 4/100
+444/444 - 3s - loss: 0.0142 - accuracy: 0.9953 - val_loss: 0.1388 - val_accuracy: 0.9602
+Epoch 5/100
+444/444 - 3s - loss: 0.0085 - accuracy: 0.9973 - val_loss: 0.1603 - val_accuracy: 0.9600
+Epoch 6/100
+444/444 - 3s - loss: 0.0192 - accuracy: 0.9944 - val_loss: 0.1907 - val_accuracy: 0.9518
+Epoch 7/100
+444/444 - 3s - loss: 0.0094 - accuracy: 0.9972 - val_loss: 0.1809 - val_accuracy: 0.9586
+Epoch 8/100
+444/444 - 3s - loss: 0.0108 - accuracy: 0.9966 - val_loss: 0.1578 - val_accuracy: 0.9628
+  1/220 [..............................] - ETA: 0s - loss: 7.5904 - accuracy: 0.3125 18/220 [=>............................] - ETA: 0s - loss: 3.4963 - accuracy: 0.5642 36/220 [===>..........................] - ETA: 0s - loss: 3.5058 - accuracy: 0.5825 54/220 [======>.......................] - ETA: 0s - loss: 3.3089 - accuracy: 0.5833 71/220 [========>.....................] - ETA: 0s - loss: 3.0510 - accuracy: 0.5863 88/220 [===========>..................] - ETA: 0s - loss: 2.9907 - accuracy: 0.5888103/220 [=============>................] - ETA: 0s - loss: 2.8603 - accuracy: 0.5962119/220 [===============>..............] - ETA: 0s - loss: 2.9488 - accuracy: 0.5867136/220 [=================>............] - ETA: 0s - loss: 2.8388 - accuracy: 0.5880153/220 [===================>..........] - ETA: 0s - loss: 2.7636 - accuracy: 0.5837169/220 [======================>.......] - ETA: 0s - loss: 2.7089 - accuracy: 0.5873186/220 [========================>.....] - ETA: 0s - loss: 2.7009 - accuracy: 0.5877203/220 [==========================>...] - ETA: 0s - loss: 2.7097 - accuracy: 0.5828220/220 [==============================] - ETA: 0s - loss: 2.7623 - accuracy: 0.5767220/220 [==============================] - 1s 3ms/step - loss: 2.7623 - accuracy: 0.5767
+Epoch 1/100
+444/444 - 3s - loss: 0.0057 - accuracy: 0.9980 - val_loss: 0.1858 - val_accuracy: 0.9588
+Epoch 2/100
+444/444 - 3s - loss: 0.0155 - accuracy: 0.9945 - val_loss: 0.1725 - val_accuracy: 0.9518
+Epoch 3/100
+444/444 - 3s - loss: 0.0048 - accuracy: 0.9983 - val_loss: 0.3072 - val_accuracy: 0.9453
+Epoch 4/100
+444/444 - 3s - loss: 0.0124 - accuracy: 0.9958 - val_loss: 0.2696 - val_accuracy: 0.9456
+Epoch 5/100
+444/444 - 3s - loss: 0.0125 - accuracy: 0.9970 - val_loss: 0.2197 - val_accuracy: 0.9535
+Epoch 6/100
+444/444 - 3s - loss: 0.0081 - accuracy: 0.9976 - val_loss: 0.1562 - val_accuracy: 0.9642
+  1/220 [..............................] - ETA: 0s - loss: 7.4086 - accuracy: 0.4375 20/220 [=>............................] - ETA: 0s - loss: 3.4862 - accuracy: 0.5656 38/220 [====>.........................] - ETA: 0s - loss: 3.4593 - accuracy: 0.6028 55/220 [======>.......................] - ETA: 0s - loss: 3.4454 - accuracy: 0.5920 74/220 [=========>....................] - ETA: 0s - loss: 3.0644 - accuracy: 0.6085 92/220 [===========>..................] - ETA: 0s - loss: 3.0469 - accuracy: 0.6026108/220 [=============>................] - ETA: 0s - loss: 2.9473 - accuracy: 0.6117124/220 [===============>..............] - ETA: 0s - loss: 2.9441 - accuracy: 0.6064139/220 [=================>............] - ETA: 0s - loss: 2.9282 - accuracy: 0.6050158/220 [====================>.........] - ETA: 0s - loss: 2.8143 - accuracy: 0.6025175/220 [======================>.......] - ETA: 0s - loss: 2.8327 - accuracy: 0.6030192/220 [=========================>....] - ETA: 0s - loss: 2.8379 - accuracy: 0.5990208/220 [===========================>..] - ETA: 0s - loss: 2.9248 - accuracy: 0.5924220/220 [==============================] - 1s 3ms/step - loss: 2.9436 - accuracy: 0.5920
+Epoch 1/100
+444/444 - 3s - loss: 0.0013 - accuracy: 0.9996 - val_loss: 0.2072 - val_accuracy: 0.9580
+Epoch 2/100
+444/444 - 3s - loss: 0.0181 - accuracy: 0.9947 - val_loss: 0.1699 - val_accuracy: 0.9586
+Epoch 3/100
+444/444 - 3s - loss: 0.0104 - accuracy: 0.9973 - val_loss: 0.1537 - val_accuracy: 0.9681
+Epoch 4/100
+444/444 - 3s - loss: 0.0092 - accuracy: 0.9976 - val_loss: 0.1921 - val_accuracy: 0.9571
+Epoch 5/100
+444/444 - 3s - loss: 0.0077 - accuracy: 0.9978 - val_loss: 0.2016 - val_accuracy: 0.9574
+Epoch 6/100
+444/444 - 3s - loss: 0.0134 - accuracy: 0.9967 - val_loss: 0.1685 - val_accuracy: 0.9633
+  1/220 [..............................] - ETA: 0s - loss: 8.4900 - accuracy: 0.4375 19/220 [=>............................] - ETA: 0s - loss: 3.5048 - accuracy: 0.5905 37/220 [====>.........................] - ETA: 0s - loss: 3.5301 - accuracy: 0.6157 53/220 [======>.......................] - ETA: 0s - loss: 3.3011 - accuracy: 0.6067 70/220 [========>.....................] - ETA: 0s - loss: 3.1296 - accuracy: 0.6018 86/220 [==========>...................] - ETA: 0s - loss: 3.0167 - accuracy: 0.6047103/220 [=============>................] - ETA: 0s - loss: 2.9132 - accuracy: 0.6074119/220 [===============>..............] - ETA: 0s - loss: 2.9170 - accuracy: 0.6008135/220 [=================>............] - ETA: 0s - loss: 2.7935 - accuracy: 0.6023150/220 [===================>..........] - ETA: 0s - loss: 2.7221 - accuracy: 0.6000168/220 [=====================>........] - ETA: 0s - loss: 2.7299 - accuracy: 0.6004185/220 [========================>.....] - ETA: 0s - loss: 2.7025 - accuracy: 0.6025203/220 [==========================>...] - ETA: 0s - loss: 2.7286 - accuracy: 0.5991220/220 [==============================] - ETA: 0s - loss: 2.7496 - accuracy: 0.5969220/220 [==============================] - 1s 3ms/step - loss: 2.7496 - accuracy: 0.5969
+Epoch 1/100
+444/444 - 3s - loss: 0.0131 - accuracy: 0.9956 - val_loss: 0.1390 - val_accuracy: 0.9628
+Epoch 2/100
+444/444 - 3s - loss: 0.0041 - accuracy: 0.9990 - val_loss: 0.1349 - val_accuracy: 0.9687
+Epoch 3/100
+444/444 - 3s - loss: 0.0038 - accuracy: 0.9987 - val_loss: 0.2298 - val_accuracy: 0.9560
+Epoch 4/100
+444/444 - 3s - loss: 0.0134 - accuracy: 0.9962 - val_loss: 0.1437 - val_accuracy: 0.9656
+Epoch 5/100
+444/444 - 3s - loss: 0.0158 - accuracy: 0.9951 - val_loss: 0.1261 - val_accuracy: 0.9687
+Epoch 6/100
+444/444 - 3s - loss: 0.0015 - accuracy: 0.9996 - val_loss: 0.1485 - val_accuracy: 0.9724
+Epoch 7/100
+444/444 - 3s - loss: 1.1566e-04 - accuracy: 1.0000 - val_loss: 0.1834 - val_accuracy: 0.9727
+  1/220 [..............................] - ETA: 0s - loss: 12.5237 - accuracy: 0.3750 18/220 [=>............................] - ETA: 0s - loss: 5.0273 - accuracy: 0.5868  34/220 [===>..........................] - ETA: 0s - loss: 5.1839 - accuracy: 0.5901 51/220 [=====>........................] - ETA: 0s - loss: 4.7051 - accuracy: 0.6072 69/220 [========>.....................] - ETA: 0s - loss: 4.5473 - accuracy: 0.5978 85/220 [==========>...................] - ETA: 0s - loss: 4.3104 - accuracy: 0.6051102/220 [============>.................] - ETA: 0s - loss: 4.1612 - accuracy: 0.6155119/220 [===============>..............] - ETA: 0s - loss: 4.2982 - accuracy: 0.6071136/220 [=================>............] - ETA: 0s - loss: 4.0752 - accuracy: 0.6142152/220 [===================>..........] - ETA: 0s - loss: 3.9930 - accuracy: 0.6131169/220 [======================>.......] - ETA: 0s - loss: 3.9135 - accuracy: 0.6163186/220 [========================>.....] - ETA: 0s - loss: 3.9047 - accuracy: 0.6171204/220 [==========================>...] - ETA: 0s - loss: 3.9127 - accuracy: 0.6101220/220 [==============================] - 1s 3ms/step - loss: 3.9835 - accuracy: 0.6041
+Epoch 1/100
+444/444 - 3s - loss: 4.2723e-05 - accuracy: 1.0000 - val_loss: 0.1883 - val_accuracy: 0.9724
+Epoch 2/100
+444/444 - 3s - loss: 2.6746e-05 - accuracy: 1.0000 - val_loss: 0.2531 - val_accuracy: 0.9696
+Epoch 3/100
+444/444 - 3s - loss: 1.1677e-05 - accuracy: 1.0000 - val_loss: 0.2443 - val_accuracy: 0.9712
+Epoch 4/100
+444/444 - 3s - loss: 7.1584e-06 - accuracy: 1.0000 - val_loss: 0.2344 - val_accuracy: 0.9718
+Epoch 5/100
+444/444 - 3s - loss: 4.3483e-06 - accuracy: 1.0000 - val_loss: 0.2351 - val_accuracy: 0.9715
+Epoch 6/100
+444/444 - 3s - loss: 4.3991e-06 - accuracy: 1.0000 - val_loss: 0.2473 - val_accuracy: 0.9732
+  1/220 [..............................] - ETA: 0s - loss: 17.0031 - accuracy: 0.3438 19/220 [=>............................] - ETA: 0s - loss: 7.3646 - accuracy: 0.5757  36/220 [===>..........................] - ETA: 0s - loss: 7.4035 - accuracy: 0.5911 54/220 [======>.......................] - ETA: 0s - loss: 7.0338 - accuracy: 0.5961 70/220 [========>.....................] - ETA: 0s - loss: 6.5536 - accuracy: 0.5996 86/220 [==========>...................] - ETA: 0s - loss: 6.2543 - accuracy: 0.6076102/220 [============>.................] - ETA: 0s - loss: 6.0582 - accuracy: 0.6158118/220 [===============>..............] - ETA: 0s - loss: 6.2311 - accuracy: 0.6088135/220 [=================>............] - ETA: 0s - loss: 5.9629 - accuracy: 0.6130153/220 [===================>..........] - ETA: 0s - loss: 5.8548 - accuracy: 0.6089171/220 [======================>.......] - ETA: 0s - loss: 5.7529 - accuracy: 0.6104188/220 [========================>.....] - ETA: 0s - loss: 5.7471 - accuracy: 0.6112207/220 [===========================>..] - ETA: 0s - loss: 5.7860 - accuracy: 0.6057220/220 [==============================] - 1s 3ms/step - loss: 5.8564 - accuracy: 0.6017
+Epoch 1/100
+444/444 - 3s - loss: 2.9301e-06 - accuracy: 1.0000 - val_loss: 0.2447 - val_accuracy: 0.9741
+Epoch 2/100
+444/444 - 3s - loss: 0.0489 - accuracy: 0.9855 - val_loss: 0.1335 - val_accuracy: 0.9605
+Epoch 3/100
+444/444 - 3s - loss: 0.0103 - accuracy: 0.9968 - val_loss: 0.2087 - val_accuracy: 0.9509
+Epoch 4/100
+444/444 - 3s - loss: 0.0036 - accuracy: 0.9989 - val_loss: 0.2254 - val_accuracy: 0.9605
+Epoch 5/100
+444/444 - 3s - loss: 0.0179 - accuracy: 0.9956 - val_loss: 0.1778 - val_accuracy: 0.9600
+Epoch 6/100
+444/444 - 3s - loss: 0.0025 - accuracy: 0.9992 - val_loss: 0.1814 - val_accuracy: 0.9667
+  1/220 [..............................] - ETA: 0s - loss: 11.5975 - accuracy: 0.3438 19/220 [=>............................] - ETA: 0s - loss: 3.9855 - accuracy: 0.5773  36/220 [===>..........................] - ETA: 0s - loss: 4.1329 - accuracy: 0.5929 53/220 [======>.......................] - ETA: 0s - loss: 3.7572 - accuracy: 0.6002 71/220 [========>.....................] - ETA: 0s - loss: 3.4898 - accuracy: 0.6008 87/220 [==========>...................] - ETA: 0s - loss: 3.3596 - accuracy: 0.6002105/220 [=============>................] - ETA: 0s - loss: 3.2287 - accuracy: 0.6083121/220 [===============>..............] - ETA: 0s - loss: 3.3194 - accuracy: 0.6010137/220 [=================>............] - ETA: 0s - loss: 3.2018 - accuracy: 0.6026154/220 [====================>.........] - ETA: 0s - loss: 3.1200 - accuracy: 0.6047169/220 [======================>.......] - ETA: 0s - loss: 3.0907 - accuracy: 0.6058184/220 [========================>.....] - ETA: 0s - loss: 3.0164 - accuracy: 0.6075199/220 [==========================>...] - ETA: 0s - loss: 2.9857 - accuracy: 0.6065216/220 [============================>.] - ETA: 0s - loss: 3.0060 - accuracy: 0.6036220/220 [==============================] - 1s 3ms/step - loss: 3.0412 - accuracy: 0.6003
+Epoch 1/100
+444/444 - 3s - loss: 0.0089 - accuracy: 0.9975 - val_loss: 0.1594 - val_accuracy: 0.9653
+Epoch 2/100
+444/444 - 3s - loss: 0.0050 - accuracy: 0.9985 - val_loss: 0.2280 - val_accuracy: 0.9622
+Epoch 3/100
+444/444 - 3s - loss: 0.0150 - accuracy: 0.9951 - val_loss: 0.1553 - val_accuracy: 0.9639
+Epoch 4/100
+444/444 - 3s - loss: 0.0083 - accuracy: 0.9975 - val_loss: 0.1864 - val_accuracy: 0.9588
+Epoch 5/100
+444/444 - 3s - loss: 0.0073 - accuracy: 0.9981 - val_loss: 0.1712 - val_accuracy: 0.9608
+Epoch 6/100
+444/444 - 3s - loss: 0.0048 - accuracy: 0.9987 - val_loss: 0.2225 - val_accuracy: 0.9580
+Epoch 7/100
+444/444 - 3s - loss: 0.0064 - accuracy: 0.9984 - val_loss: 0.1646 - val_accuracy: 0.9642
+Epoch 8/100
+444/444 - 3s - loss: 0.0079 - accuracy: 0.9978 - val_loss: 0.2311 - val_accuracy: 0.9529
+Epoch 9/100
+444/444 - 3s - loss: 0.0117 - accuracy: 0.9970 - val_loss: 0.1405 - val_accuracy: 0.9605
+Epoch 10/100
+444/444 - 3s - loss: 0.0107 - accuracy: 0.9970 - val_loss: 0.1515 - val_accuracy: 0.9633
+Epoch 11/100
+444/444 - 3s - loss: 0.0084 - accuracy: 0.9973 - val_loss: 0.1636 - val_accuracy: 0.9650
+  1/220 [..............................] - ETA: 0s - loss: 9.9234 - accuracy: 0.3125 19/220 [=>............................] - ETA: 0s - loss: 4.2185 - accuracy: 0.5740 36/220 [===>..........................] - ETA: 0s - loss: 4.5846 - accuracy: 0.5964 53/220 [======>.......................] - ETA: 0s - loss: 4.2485 - accuracy: 0.5932 69/220 [========>.....................] - ETA: 0s - loss: 3.9081 - accuracy: 0.5901 85/220 [==========>...................] - ETA: 0s - loss: 3.6693 - accuracy: 0.5846102/220 [============>.................] - ETA: 0s - loss: 3.4992 - accuracy: 0.5898119/220 [===============>..............] - ETA: 0s - loss: 3.5209 - accuracy: 0.5869135/220 [=================>............] - ETA: 0s - loss: 3.3385 - accuracy: 0.5900153/220 [===================>..........] - ETA: 0s - loss: 3.2759 - accuracy: 0.5866170/220 [======================>.......] - ETA: 0s - loss: 3.2424 - accuracy: 0.5901189/220 [========================>.....] - ETA: 0s - loss: 3.2125 - accuracy: 0.5926207/220 [===========================>..] - ETA: 0s - loss: 3.2999 - accuracy: 0.5854220/220 [==============================] - 1s 3ms/step - loss: 3.3124 - accuracy: 0.5791
+old_val_acc_std: 0.008790406121968084, new_val_acc_std: 0.011461765584433318
+old_val_acc_mean: 0.5924573838710785, new_val_acc_mean: 0.58078125
+[0m

@@ -1,0 +1,67 @@
+Failure # 1 (occurred at 2021-07-12_15-19-21)
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.8/site-packages/ray/tune/trial_runner.py", line 702, in _process_trial
+    results = self.trial_executor.fetch_result(trial)
+  File "/opt/conda/lib/python3.8/site-packages/ray/tune/ray_trial_executor.py", line 686, in fetch_result
+    result = ray.get(trial_future[0], timeout=DEFAULT_GET_TIMEOUT)
+  File "/opt/conda/lib/python3.8/site-packages/ray/_private/client_mode_hook.py", line 47, in wrapper
+    return func(*args, **kwargs)
+  File "/opt/conda/lib/python3.8/site-packages/ray/worker.py", line 1481, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(InternalError): [36mray::BlackBox.train_buffered()[39m (pid=243, ip=172.17.0.4)
+  File "python/ray/_raylet.pyx", line 505, in ray._raylet.execute_task
+  File "python/ray/_raylet.pyx", line 449, in ray._raylet.execute_task.function_executor
+  File "/opt/conda/lib/python3.8/site-packages/ray/_private/function_manager.py", line 556, in actor_method_executor
+    return method(__ray_actor, *args, **kwargs)
+  File "/opt/conda/lib/python3.8/site-packages/ray/tune/trainable.py", line 173, in train_buffered
+    result = self.train()
+  File "/opt/conda/lib/python3.8/site-packages/ray/tune/trainable.py", line 232, in train
+    result = self.step()
+  File "/opt/conda/lib/python3.8/site-packages/ray/tune/trainable.py", line 650, in step
+    result = self._train()
+  File "main.py", line 207, in _train
+    model = nn.conv(temporal_filters=self.temporal_filters,
+  File "/src/nn.py", line 13, in conv
+    model = Sequential()
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/training/tracking/base.py", line 457, in _method_wrapper
+    result = method(self, *args, **kwargs)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/keras/engine/sequential.py", line 116, in __init__
+    super(functional.Functional, self).__init__(  # pylint: disable=bad-super-call
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/training/tracking/base.py", line 457, in _method_wrapper
+    result = method(self, *args, **kwargs)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/keras/engine/training.py", line 308, in __init__
+    self._init_batch_counters()
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/training/tracking/base.py", line 457, in _method_wrapper
+    result = method(self, *args, **kwargs)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/keras/engine/training.py", line 317, in _init_batch_counters
+    self._train_counter = variables.Variable(0, dtype='int64', aggregation=agg)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/ops/variables.py", line 262, in __call__
+    return cls._variable_v2_call(*args, **kwargs)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/ops/variables.py", line 244, in _variable_v2_call
+    return previous_getter(
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/ops/variables.py", line 237, in <lambda>
+    previous_getter = lambda **kws: default_variable_creator_v2(None, **kws)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/ops/variable_scope.py", line 2633, in default_variable_creator_v2
+    return resource_variable_ops.ResourceVariable(
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/ops/variables.py", line 264, in __call__
+    return super(VariableMetaclass, cls).__call__(*args, **kwargs)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/ops/resource_variable_ops.py", line 1507, in __init__
+    self._init_from_args(
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/ops/resource_variable_ops.py", line 1650, in _init_from_args
+    initial_value = ops.convert_to_tensor(
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/framework/ops.py", line 1499, in convert_to_tensor
+    ret = conversion_func(value, dtype=dtype, name=name, as_ref=as_ref)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/framework/tensor_conversion_registry.py", line 52, in _default_conversion_function
+    return constant_op.constant(value, dtype, name=name)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/framework/constant_op.py", line 263, in constant
+    return _constant_impl(value, dtype, shape, name, verify_shape=False,
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/framework/constant_op.py", line 275, in _constant_impl
+    return _constant_eager_impl(ctx, value, dtype, shape, verify_shape)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/framework/constant_op.py", line 300, in _constant_eager_impl
+    t = convert_to_eager_tensor(value, ctx, dtype)
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/framework/constant_op.py", line 97, in convert_to_eager_tensor
+    ctx.ensure_initialized()
+  File "/opt/conda/lib/python3.8/site-packages/tensorflow/python/eager/context.py", line 539, in ensure_initialized
+    context_handle = pywrap_tfe.TFE_NewContext(opts)
+tensorflow.python.framework.errors_impl.InternalError: CUDA runtime implicit initialization on GPU:0 failed. Status: out of memory
+

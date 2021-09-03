@@ -6,7 +6,7 @@ import pandas as pd
 import json
 
 def raw_data_to_csv(s,n):
-    filenames = glob.glob(f'../results_12072021/subject_{s}{n}/BlackBox_*/result.json')
+    filenames = glob.glob(f'../results_27072021/subject_{s}{n}/BlackBox_*/result.json')
 
     window_size = []
     step_size = []
@@ -85,31 +85,31 @@ def boxplot_hyperparams(s,n):
         ax.figure.savefig(f'subject_{s}{n}_analysis/subject_{s}{n}_{row}_fig.png')
 
 def plot_validation_results():
-    df = pd.read_csv(f'../results_new_validation/validation_data.csv')
+    df = pd.read_csv(f'../validation/val_data_short.csv')
     
-    b_data = df.loc[0:3,['old_val_acc_mean','new_val_acc_mean']].to_numpy()
-    c_data = df.loc[4:7,['old_val_acc_mean','new_val_acc_mean']].to_numpy()
-    e_data = df.loc[8:11,['old_val_acc_mean','new_val_acc_mean']].to_numpy()
-    f_data = df.loc[12:15,['old_val_acc_mean','new_val_acc_mean']].to_numpy()
+    b_data = df.loc[0:5].to_numpy()[:,1]
+    c_data = df.loc[6:11].to_numpy()[:,1]
+    e_data = df.loc[12:17].to_numpy()[:,1]
+    f_data = df.loc[18:23].to_numpy()[:,1]
+    print(b_data)
+    print(c_data)
+    print(e_data)
+    print(f_data)
     
     px = 1/plt.rcParams['figure.dpi']  # pixel in inches
     plt.figure(figsize=(1024*px, 640*px))
 
-    plt.plot(['25%','50%','75%','100%'], b_data[:,0], color='pink')
-    plt.plot(['25%','50%','75%','100%'], b_data[:,1], color='red')
-    plt.plot(['25%','50%','75%','100%'], c_data[:,0], color='gold')
-    plt.plot(['25%','50%','75%','100%'], c_data[:,1], color='darkgoldenrod')
-    plt.plot(['25%','50%','75%','100%'], e_data[:,0], color='limegreen')
-    plt.plot(['25%','50%','75%','100%'], e_data[:,1], color='darkgreen')
-    plt.plot(['25%','50%','75%','100%'], f_data[:,0], color='skyblue')
-    plt.plot(['25%','50%','75%','100%'], f_data[:,1], color='darkblue')
+    plt.plot(['10%','15%','25%','50%','75%','100%'], b_data, color='darkred')
+    plt.plot(['10%','15%','25%','50%','75%','100%'], c_data, color='darkgreen')
+    plt.plot(['10%','15%','25%','50%','75%','100%'], e_data, color='darkblue')
+    plt.plot(['10%','15%','25%','50%','75%','100%'], f_data, color='gold')
 
-    plt.legend(['B val keras', 'B val vote', 'C val keras', 'C val vote', 'E val keras', 'E val vote', 'F val keras', 'F val vote'])
+    plt.legend(['Subject B', 'Subject C', 'Subject E', 'Subject F'])
 
-    plt.xlabel('Data percentage used in the experiment')
+    plt.xlabel('Data crop used in the experiment')
     plt.ylabel('val_accuracy')
 
-    plt.title('Comparison between keras validation and vote validation for each subject and data percentage')
+    plt.title('Survey validation accuracy results for all subjects and data crops.')
 
     plt.show()
 
@@ -120,16 +120,15 @@ def plot_tensorflow_like_graph(s,n):
     px = 1/plt.rcParams['figure.dpi']  # pixel in inches
     plt.figure(figsize=(1024*px, 640*px))
 
-    plt.bar(range(len(arr)), arr)
-    plt.xlabel('Trial number')
+    plt.scatter(range(len(arr)), arr)
+    plt.xlabel('Iteration')
     plt.ylabel('val_accuracy')
-    plt.title('Barplot of all accuracies by trial number')
+    plt.title('Scatterplot of all accuracies obtained during the optimization phase.')
 
-    plt.savefig(f'subject_{s}{n}_analysis/subject_{s}{n}_barplot.png')
+    plt.savefig(f'subject_{s}{n}_analysis/subject_{s}{n}_scatter.png')
 
 
 if __name__ == '__main__':
     for s in ['B','C','E','F']:
         for n in [25,50,75,100]:
-            #raw_data_to_csv(s,n)
             plot_tensorflow_like_graph(s,n)
