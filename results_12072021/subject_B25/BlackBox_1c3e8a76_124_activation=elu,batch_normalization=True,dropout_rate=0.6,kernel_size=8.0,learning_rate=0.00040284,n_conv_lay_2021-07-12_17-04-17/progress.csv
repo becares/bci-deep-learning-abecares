@@ -1,2 +1,0 @@
-val_loss,val_accuracy,done,timesteps_total,episodes_total,training_iteration,experiment_id,date,timestamp,time_this_iter_s,time_total_s,pid,hostname,node_ip,time_since_restore,timesteps_since_restore,iterations_since_restore,trial_id
-0.6961634397506714,0.5460754334926605,True,,,1,6bdbe58502084a5bbda147c8e7146055,2021-07-12_17-05-00,1626109500,39.75873255729675,39.75873255729675,68521,9d3501cbbd1a,172.17.0.4,39.75873255729675,0,1,1c3e8a76
